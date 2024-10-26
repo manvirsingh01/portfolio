@@ -1,48 +1,20 @@
-body{
+body {
     /* font-family: 'Roobert', sans-serif; */
-   background-color: #fff;
-   font-family: "Open Sans", sans-serif;
-}
-/* header */
-nav{
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-}
-nav ul{
-    list-style-type: none;
-}
-nav li{ 
-    display: inline-block; 
-    margin-left: 30px;
-}
-nav a{
-    text-decoration: none;
-}
-.firstpart_of_nav{
-    display: flex;
-    justify-content: left;
-
-}
-.secondpart_of_nav{
-    display: flex;
-    justify-content: right;
-    margin-left:500px ;
-}
-/* main */
-.gallery{
-    margin: 70px;
+    background-color: #000000;
+    font-family: "Open Sans", sans-serif;
     display: flex;
     flex-direction: column;
-}
-.gallery ul{
-    list-style-type: none;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    color: white;
 }
 
 /* footer */
-footer{
+footer {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -52,21 +24,45 @@ footer{
     font-family: "Open Sans", sans-serif;
     font-weight: 200;
     gap: 20px;
-    background-color: rgb(236, 243, 254, 255);
 }
-footer h1{
+
+footer h1 {
     font-family: "Open Sans", sans-serif;
     font-weight: 300;
     letter-spacing: 0px;
     line-height: 1.4;
     width: 600px;
 }
-footer div{
+
+footer div {
     width: 600px;
 }
-footer a{
+
+footer a {
     margin-left: 30px;
 }
-footer svg{
-    fill: black;
+
+footer svg {
+    fill: rgb(255, 255, 255); /* Change to your desired color */
+}
+
+
+/* main */
+main {
+    justify-content: center;
+    display: inline;
+    margin: 50px;
+
+}
+
+main section {
+    display: flex;
+    justify-content: center;
+
+}
+
+.element {
+    display: none;
+    border: 3px solid black;
+    border-radius: 30px;
 }
