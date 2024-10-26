@@ -66,3 +66,67 @@ main section {
     border: 3px solid black;
     border-radius: 30px;
 }
+/* projectt */
+#project{
+    display: flex;
+    flex-direction: column;
+}
+
+table, th, td {
+    padding: 10px;
+    text-align: center;
+}
+/* gallery */
+
+/* Grid container */
+.grid-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 5 equal columns */
+    grid-template-rows: repeat(3, 200px); /* 2 equal rows with fixed height */
+    gap: 10px; /* Space between grid items */
+    max-width: 1000px; /* Optional max width */
+    margin: 20px auto; /* Center container */
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+}
+
+/* Grid items */
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+    border: 1px solid #333;
+    font-size: 18px;
+    font-weight: bold;
+    height: 100%; /* Ensure items take full row height */
+    overflow: hidden; /* Hide overflow */
+}
+
+/* Images */
+.grid-item img {
+    width: 100%; /* Make images responsive */
+    height: 100%; /* Fill the item height */
+    object-fit: cover; /* Cover the container without distortion */
+}
+
+/* about me */
+.element div{
+    display: flex;
+    flex-direction: column;
+}
+.image-container {
+    width: 150px; /* Width of the circular container */
+    height: 150px; /* Height of the circular container */
+    border: 5px solid #ffffff; /* Border color and thickness */
+    border-radius: 50%; /* Makes the border circular */
+    overflow: hidden; /* Ensures the image stays within the circle */
+    display: flex; /* Center the image */
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+}
+
+.image-container img {
+    width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain aspect ratio */
+}
