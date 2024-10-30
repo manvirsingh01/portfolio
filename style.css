@@ -11,6 +11,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     text-align: center;
     color: white;
+    margin: 40px;
 }
 
 /* footer */
@@ -77,6 +78,10 @@ table, th, td {
     text-align: center;
 }
 /* gallery */
+section .gallery{
+    display: flex;
+    flex-direction: row;
+}
 
 /* Grid container */
 .grid-list {
@@ -88,6 +93,7 @@ table, th, td {
     margin: 20px auto; /* Center container */
     list-style-type: none; /* Remove bullets */
     padding: 0; /* Remove padding */
+
 }
 
 /* Grid items */
@@ -124,6 +130,7 @@ table, th, td {
     display: flex; /* Center the image */
     justify-content: center; /* Center the image horizontally */
     align-items: center; /* Center the image vertically */
+
 }
 
 .image-container img {
