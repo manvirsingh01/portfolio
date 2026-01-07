@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'netflix-red': '#E50914',
+                        'netflix-black': '#141414',
+                        'netflix-dark-gray': '#181818',
+                        'netflix-light-gray': '#2F2F2F',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="js/app.js" defer></script>
+</head>
+
+<body class="bg-[#141414] text-white font-sans antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="fixed top-0 w-full z-50 transition-colors duration-300 bg-black p-4 md:px-12 flex items-center justify-between">
+        <div class="flex items-center gap-8">
+            <a href="index.html" class="text-red-600 text-3xl md:text-4xl font-bold uppercase tracking-tighter">Manvir
+                Singh</a>
+            <ul class="hidden md:flex gap-5 text-sm font-medium text-gray-300">
+                <li><a href="browse.html" class="hover:text-white transition">Home</a></li>
+                <li><a href="#" class="text-white font-bold cursor-default">Skills</a></li>
+                <li><a href="about.html" class="hover:text-white transition">About</a></li>
+            </ul>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="group relative">
+                <div class="w-8 h-8 rounded bg-gray-700 overflow-hidden cursor-pointer">
+                    <img id="nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <div
+                    class="absolute right-0 top-full w-32 bg-black/90 border border-gray-700 hidden group-hover:block p-2 text-sm text-gray-300">
+                    <a href="index.html" class="block hover:underline"
+                        onclick="localStorage.removeItem('activeProfile')">Sign out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Skills Section -->
+    <main id="skills-container" class="pt-24 pb-20 px-4 md:px-12 min-h-screen">
+        <h1 class="text-4xl md:text-5xl font-bold mb-12 border-l-4 border-red-600 pl-4 animate-fade-in">My Skills</h1>
+        <div id="skills-grid" class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <!-- Injected by JS -->
+        </div>
+    </main>
+
+</body>
+
+</html>

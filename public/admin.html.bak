@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'netflix-red': '#E50914',
+                        'netflix-black': '#141414',
+                        'netflix-dark-gray': '#181818',
+                        'netflix-light-gray': '#2F2F2F',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="js/admin.js" defer></script>
+</head>
+
+<body class="bg-[#141414] text-white font-sans antialiased p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="flex justify-between items-center mb-12">
+            <h1 class="text-3xl font-bold text-red-600">Admin Dashboard</h1>
+            <a href="browse.html" class="text-sm underline">Back to Browse</a>
+        </header>
+
+        <div class="grid md:grid-cols-2 gap-12">
+            <!-- Add Project Form -->
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Add New Project</h2>
+                <form id="add-project-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Project Title</label>
+                        <input type="text" id="p-title"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Image URL</label>
+                        <input type="url" id="p-image"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            placeholder="https://..." required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Category (Row)</label>
+                        <select id="p-category"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600">
+                            <!-- Populated by JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">GitHub URL (Optional)</label>
+                        <input type="url" id="p-github"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600">
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded transition mt-4">
+                        Add Project
+                    </button>
+                </form>
+            </section>
+
+            <!-- Update Hero Form -->
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Update Hero Section</h2>
+                <form id="hero-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Title</label>
+                        <input type="text" id="h-title"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Description</label>
+                        <textarea id="h-desc" rows="3"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            required></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Image URL</label>
+                        <input type="url" id="h-image"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Link URL</label>
+                        <input type="url" id="h-link"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            required>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-white text-black hover:bg-gray-200 font-bold py-3 rounded transition mt-4">
+                        Update Hero
+                    </button>
+                </form>
+            </section>
+
+            <!-- Manage Items (Delete) -->
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800 md:col-span-2">
+                <h2 class="text-xl font-bold mb-6">Manage Existing Projects</h2>
+                <div id="items-list" class="space-y-4">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+</body>
+
+</html>

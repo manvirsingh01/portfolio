@@ -1,0 +1,230 @@
+{
+  "profiles": [
+    {
+      "id": 1,
+      "name": "2023",
+      "avatar": "images/year_2023.png"
+    },
+    {
+      "id": 2,
+      "name": "2024",
+      "avatar": "images/year_2024.png"
+    },
+    {
+      "id": 3,
+      "name": "2025",
+      "avatar": "images/year_2025.png"
+    }
+  ],
+  "hero": {
+    "title": "Portfolio 2.0",
+    "description": "Welcome to the future of my work. Explore my journey through the years.",
+    "imageUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
+    "link": "#",
+    "githubUrl": "https://github.com/manvirsingh"
+  },
+  "rows": [
+    {
+      "title": "2023 Projects",
+      "profileIds": [
+        1
+      ],
+      "items": [
+        {
+          "id": 101,
+          "title": "First Website",
+          "image": "https://images.unsplash.com/photo-1547658719-da2b51169166?w=500&auto=format&fit=crop",
+          "githubUrl": "https://github.com/manvirsingh/first-website",
+          "description": "My journey into web development began with this simple yet elegant portfolio website. Built from scratch using HTML, CSS, and JavaScript, this project taught me the fundamentals of frontend development and responsive design.",
+          "liveUrl": "https://example.com/first-website",
+          "technologies": [
+            "HTML5",
+            "CSS3",
+            "JavaScript",
+            "Responsive Design"
+          ],
+          "futureScope": "Planning to add a blog section and integrate a contact form with backend functionality.",
+          "useCases": [
+            "Personal branding",
+            "Showcasing early projects",
+            "Learning platform basics"
+          ],
+          "contributors": [
+            {
+              "name": "Manvir Singh",
+              "githubUrl": "https://github.com/manvirsingh",
+              "avatar": "images/year_2023.png"
+            }
+          ],
+          "recommendations": [
+            102,
+            201
+          ]
+        },
+        {
+          "id": 102,
+          "title": "Calculator App",
+          "image": "https://images.unsplash.com/photo-1587145820266-a5951eebebb1?w=500&auto=format&fit=crop",
+          "githubUrl": "https://github.com/manvirsingh/calculator",
+          "description": "A fully functional calculator application with a sleek interface. Supports basic arithmetic operations and features keyboard input support for enhanced user experience.",
+          "liveUrl": "https://example.com/calculator",
+          "technologies": [
+            "JavaScript",
+            "HTML",
+            "CSS",
+            "DOM Manipulation"
+          ],
+          "futureScope": "Add scientific calculator mode and calculation history feature.",
+          "useCases": [
+            "Quick calculations",
+            "Learning JavaScript fundamentals",
+            "UI/UX practice"
+          ],
+          "contributors": [
+            {
+              "name": "Manvir Singh",
+              "githubUrl": "https://github.com/manvirsingh",
+              "avatar": "images/year_2023.png"
+            }
+          ],
+          "recommendations": [
+            101,
+            201
+          ]
+        }
+      ]
+    },
+    {
+      "title": "2024 Projects",
+      "profileIds": [
+        2
+      ],
+      "items": [
+        {
+          "id": 201,
+          "title": "E-Commerce App",
+          "image": "https://images.unsplash.com/photo-1557821552-17105176677c?w=500&auto=format&fit=crop",
+          "githubUrl": "https://github.com/manvirsingh/ecommerce"
+        },
+        {
+          "id": 202,
+          "title": "Social Dashboard",
+          "image": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=500&auto=format&fit=crop",
+          "githubUrl": "https://github.com/manvirsingh/dashboard"
+        }
+      ]
+    },
+    {
+      "title": "2025 Innovations",
+      "profileIds": [
+        3
+      ],
+      "items": [
+        {
+          "id": 301,
+          "title": "AI Chatbot",
+          "image": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=500&auto=format&fit=crop",
+          "githubUrl": "https://github.com/manvirsingh/chatbot"
+        },
+        {
+          "id": 302,
+          "title": "Neural Network Viz",
+          "image": "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=500&auto=format&fit=crop",
+          "githubUrl": "#"
+        }
+      ]
+    },
+    {
+      "title": "Shared Skills",
+      "profileIds": [
+        1,
+        2,
+        3
+      ],
+      "items": [
+        {
+          "id": 901,
+          "title": "Problem Solving",
+          "image": "https://images.unsplash.com/photo-1616469829581-73993eb86b02?w=500&auto=format&fit=crop"
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "id": 1,
+      "name": "JavaScript",
+      "level": 90,
+      "category": "Frontend"
+    },
+    {
+      "id": 2,
+      "name": "React",
+      "level": 85,
+      "category": "Frontend"
+    },
+    {
+      "id": 3,
+      "name": "Node.js",
+      "level": 75,
+      "category": "Backend"
+    },
+    {
+      "id": 4,
+      "name": "Python",
+      "level": 80,
+      "category": "Backend"
+    }
+  ],
+  "about": {
+    "intro": "I am a passionate developer building the future of web.",
+    "socials": [
+      {
+        "platform": "GitHub",
+        "url": "https://github.com/manvirsingh"
+      },
+      {
+        "platform": "LinkedIn",
+        "url": "#"
+      },
+      {
+        "platform": "Twitter",
+        "url": "#"
+      }
+    ],
+    "timeline": [
+      {
+        "year": "2025",
+        "title": "Senior Engineer",
+        "desc": "Leading AI integration projects."
+      },
+      {
+        "year": "2024",
+        "title": "Full Stack Dev",
+        "desc": "Built multiple SaaS products."
+      },
+      {
+        "year": "2023",
+        "title": "Started Coding",
+        "desc": "Hello World!"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "id": 1,
+      "role": "Senior Software Engineer",
+      "company": "Tech Corp",
+      "duration": "2024 - Present",
+      "description": "Leading the frontend team."
+    },
+    {
+      "id": 2,
+      "role": "Full Stack Developer",
+      "company": "StartUp Inc",
+      "duration": "2023 - 2024",
+      "description": "Built MVP from scratch."
+    }
+  ],
+  "resumeUrl": "uploads/resume.pdf"
+}

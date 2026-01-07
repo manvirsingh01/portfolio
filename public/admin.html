@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Manvir Singh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'netflix-red': '#E50914',
+                        'netflix-black': '#141414',
+                        'netflix-dark-gray': '#181818',
+                        'netflix-light-gray': '#2F2F2F',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <script src="js/admin.js" defer></script>
+</head>
+
+<body class="bg-[#141414] text-white font-sans antialiased p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="flex justify-between items-center mb-12">
+            <h1 class="text-3xl font-bold text-red-600">Admin Dashboard</h1>
+            <a href="browse.html" class="text-sm underline">Back to Browse</a>
+        </header>
+
+        <!-- TABS -->
+        <div class="mb-8 flex gap-4 border-b border-gray-700 pb-4 overflow-x-auto">
+            <button onclick="switchTab('projects')" id="tab-projects"
+                class="tab-btn px-4 py-2 bg-red-600 text-white rounded font-bold transition">Projects</button>
+            <button onclick="switchTab('skills')" id="tab-skills"
+                class="tab-btn px-4 py-2 bg-gray-800 text-gray-400 rounded hover:bg-gray-700 transition">Skills</button>
+            <button onclick="switchTab('about')" id="tab-about"
+                class="tab-btn px-4 py-2 bg-gray-800 text-gray-400 rounded hover:bg-gray-700 transition">About</button>
+            <button onclick="switchTab('experience')" id="tab-experience"
+                class="tab-btn px-4 py-2 bg-gray-800 text-gray-400 rounded hover:bg-gray-700 transition">Experience</button>
+        </div>
+
+        <!-- PROJECTS TAB -->
+        <div id="view-projects" class="tab-content">
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Column 1: Add New Project -->
+                <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                    <h2 class="text-xl font-bold mb-6">Add New Project</h2>
+                    <form id="add-project-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Project Title</label>
+                            <input type="text" id="p-title"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Image URL</label>
+                            <input type="url" id="p-image"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                                placeholder="https://..." required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Category (Row)</label>
+                            <select id="p-category"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600">
+                                <!-- Populated by JS -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">GitHub URL</label>
+                            <input type="url" id="p-github"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600">
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded transition mt-4">Add
+                            Project</button>
+                    </form>
+                </section>
+
+                <!-- Column 2: Manage Projects List -->
+                <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                    <h2 class="text-xl font-bold mb-6">All Projects</h2>
+                    <div id="items-list" class="space-y-4 max-h-[600px] overflow-y-auto custom-scroll"></div>
+                </section>
+
+                <!-- Column 3: Edit Project Details -->
+                <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                    <h2 class="text-xl font-bold mb-4">Edit Project Details</h2>
+                    <p id="edit-prompt" class="text-sm text-gray-400 mb-4">Select a project to edit its details</p>
+
+                    <form id="edit-project-form" class="space-y-4 hidden">
+                        <input type="hidden" id="edit-project-id">
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Description</label>
+                            <textarea id="edit-description" rows="3"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Live Demo URL</label>
+                            <input type="url" id="edit-live-url"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Technologies (comma separated)</label>
+                            <input type="text" id="edit-technologies"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                                placeholder="React, Node.js, MongoDB">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Use Cases (one per line)</label>
+                            <textarea id="edit-use-cases" rows="3"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Future Scope</label>
+                            <textarea id="edit-future-scope" rows="2"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Contributors (JSON format)</label>
+                            <textarea id="edit-contributors" rows="3"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600 font-mono text-xs"
+                                placeholder='[{"name":"...","githubUrl":"...","avatar":"..."}]'></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-1">Recommendations (Project IDs, comma
+                                separated)</label>
+                            <input type="text" id="edit-recommendations"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                                placeholder="101, 102, 201">
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-white text-black hover:bg-gray-200 font-bold py-3 rounded transition">Save
+                            Changes</button>
+                        <button type="button" onclick="cancelEditProject()"
+                            class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 rounded transition">Cancel</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+
+        <!-- SKILLS TAB -->
+        <div id="view-skills" class="tab-content hidden grid md:grid-cols-2 gap-12">
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Add New Skill</h2>
+                <form id="add-skill-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Skill Name</label>
+                        <input type="text" id="s-name"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Level (0-100)</label>
+                        <input type="number" id="s-level" min="0" max="100"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Category</label>
+                        <input type="text" id="s-category"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"
+                            placeholder="Frontend, Backend, etc." required>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded transition mt-4">Add
+                        Skill</button>
+                </form>
+            </section>
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Manage Skills</h2>
+                <div id="skills-list" class="space-y-4 max-h-[500px] overflow-y-auto custom-scroll"></div>
+            </section>
+        </div>
+
+        <!-- ABOUT TAB -->
+        <div id="view-about" class="tab-content hidden grid md:grid-cols-2 gap-12">
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Resume Management</h2>
+
+                <!-- Current Resume Status -->
+                <div id="current-resume-status" class="mb-6 p-4 bg-[#333] rounded">
+                    <p class="text-sm text-gray-400 mb-2">Current Resume:</p>
+                    <div id="resume-info" class="flex items-center justify-between">
+                        <span class="text-gray-300 text-sm">No resume uploaded</span>
+                    </div>
+                </div>
+
+                <!-- Upload Form -->
+                <form id="upload-resume-form" class="space-y-4 mb-8 border-b border-gray-700 pb-8">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Upload New Resume (PDF)</label>
+                        <input type="file" id="resume-file" accept="application/pdf"
+                            class="w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-600 file:text-white hover:file:bg-red-700 cursor-pointer">
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-white text-black hover:bg-gray-200 font-bold py-3 rounded transition">Upload
+                        Resume</button>
+                    <p id="resume-status" class="text-sm text-green-500 mt-2 hidden">Resume uploaded successfully!</p>
+                </form>
+
+                <h2 class="text-xl font-bold mb-6">Update Intro</h2>
+                <form id="about-intro-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Intro Text</label>
+                        <textarea id="a-intro" rows="4"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-red-600"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded transition mt-4">Update
+                        Intro</button>
+                </form>
+
+                <h2 class="text-xl font-bold mt-12 mb-6">Add Timeline Event</h2>
+                <form id="add-timeline-form" class="space-y-4">
+                    <div><label class="block text-sm text-gray-400 mb-1">Year</label><input type="text" id="t-year"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white" required></div>
+                    <div><label class="block text-sm text-gray-400 mb-1">Title</label><input type="text" id="t-title"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white" required></div>
+                    <div><label class="block text-sm text-gray-400 mb-1">Description</label><textarea id="t-desc"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white" required></textarea></div>
+                    <button type="submit"
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded transition mt-4">Add
+                        Event</button>
+                </form>
+            </section>
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Timeline Events</h2>
+                <div id="timeline-list" class="space-y-4 max-h-[500px] overflow-y-auto custom-scroll"></div>
+            </section>
+        </div>
+
+        <!-- EXPERIENCE TAB -->
+        <div id="view-experience" class="tab-content hidden grid md:grid-cols-2 gap-12">
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Manage Resume</h2>
+                <form id="upload-resume-form" class="space-y-4 mb-8 border-b border-gray-700 pb-8">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Upload PDF</label>
+                        <input type="file" id="resume-file" accept="application/pdf"
+                            class="w-full text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-red-600 file:text-white hover:file:bg-red-700 cursor-pointer">
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-white text-black hover:bg-gray-200 font-bold py-3 rounded transition">Upload
+                        Resume</button>
+                    <p id="resume-status" class="text-sm text-green-500 mt-2 hidden">Resume uploaded successfully!</p>
+                </form>
+
+                <h2 class="text-xl font-bold mb-6">Add Experience</h2>
+                <form id="add-experience-form" class="space-y-4">
+                    <div><label class="block text-sm text-gray-400 mb-1">Company</label><input type="text"
+                            id="e-company" class="w-full bg-[#333] border-none rounded p-3 text-white" required></div>
+                    <div><label class="block text-sm text-gray-400 mb-1">Role</label><input type="text" id="e-role"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white" required></div>
+                    <div><label class="block text-sm text-gray-400 mb-1">Duration</label><input type="text"
+                            id="e-duration" class="w-full bg-[#333] border-none rounded p-3 text-white"
+                            placeholder="e.g. 2024 - Present" required></div>
+                    <div><label class="block text-sm text-gray-400 mb-1">Description</label><textarea id="e-desc"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white" required></textarea></div>
+                    <button type="submit"
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded transition mt-4">Add
+                        Experience</button>
+                </form>
+            </section>
+            <section class="bg-gray-900 p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Experience List</h2>
+                <div id="experience-list" class="space-y-4 max-h-[500px] overflow-y-auto custom-scroll"></div>
+            </section>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

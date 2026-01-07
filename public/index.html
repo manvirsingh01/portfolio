@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who's Watching? | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'netflix-red': '#E50914',
+                        'netflix-black': '#141414',
+                        'netflix-dark-gray': '#181818',
+                        'netflix-light-gray': '#2F2F2F',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="js/app.js" defer></script>
+</head>
+
+<body class="bg-[#141414] min-h-screen flex flex-col justify-center items-center text-white font-sans antialiased">
+
+    <!-- Profile Gate -->
+    <div id="profile-gate" class="animate-fade-in flex flex-col items-center">
+        <h1 class="text-3xl md:text-[3.5vw] mb-8 font-medium">Who's watching?</h1>
+
+        <div id="profile-list" class="flex flex-wrap gap-4 md:gap-8 justify-center">
+            <!-- Profiles injected by JS -->
+        </div>
+
+        <a href="admin.html"
+            class="mt-12 text-gray-500 border border-gray-500 px-4 py-2 hover:text-white hover:border-white transition uppercase tracking-widest text-sm">
+            Manage Profiles
+        </a>
+    </div>
+
+</body>
+
+</html>
