@@ -1,0 +1,7 @@
+# Vercel
+.vercel
+*.log
+
+# Environment
+.env
+.env.local

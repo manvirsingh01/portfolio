@@ -123,13 +123,14 @@
     <!-- Project Detail Modal -->
     <div id="project-modal" class="fixed inset-0 bg-black/90 z-[100] hidden opacity-0 transition-opacity duration-300">
         <div class="absolute inset-0" id="modal-backdrop"></div>
-        <div class="relative w-full max-w-5xl mx-auto top-[5%] max-h-[90vh] overflow-y-auto">
+        <div
+            class="relative w-full max-w-5xl mx-auto top-[2%] md:top-[5%] max-h-[96vh] md:max-h-[90vh] overflow-y-auto px-2 md:px-4">
             <div class="bg-[#181818] rounded-lg shadow-2xl transform scale-95 transition-transform duration-300"
                 id="modal-content">
                 <!-- Close Button -->
                 <button id="modal-close"
-                    class="absolute top-4 right-4 z-10 w-10 h-10 bg-[#181818] hover:bg-gray-700 rounded-full flex items-center justify-center transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="absolute top-2 right-2 md:top-4 md:right-4 z-10 w-8 h-8 md:w-10 md:h-10 bg-[#181818] hover:bg-gray-700 rounded-full flex items-center justify-center transition">
+                    <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M6 18L18 6M6 6l12 12" />
                     </svg>
