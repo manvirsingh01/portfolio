@@ -281,7 +281,42 @@ function renderAbout() {
     } else if (resumeInfo) {
         resumeInfo.innerHTML = '<span class="text-gray-400 text-sm">No resume uploaded</span>';
     }
+
+    // Display current profile picture
+    const profilePicImg = document.getElementById('current-profile-pic');
+    const noProfilePic = document.getElementById('no-profile-pic');
+    const profilePicInput = document.getElementById('profile-pic-url');
+
+    if (currentData.about && currentData.about.profilePicture) {
+        profilePicImg.src = currentData.about.profilePicture;
+        profilePicImg.classList.remove('hidden');
+        noProfilePic.classList.add('hidden');
+        if (profilePicInput) profilePicInput.value = currentData.about.profilePicture;
+    } else {
+        profilePicImg.classList.add('hidden');
+        noProfilePic.classList.remove('hidden');
+        if (profilePicInput) profilePicInput.value = '';
+    }
 }
+
+// Profile Picture Form Handler
+document.getElementById('profile-pic-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!currentData.about) currentData.about = {};
+
+    const profilePicUrl = document.getElementById('profile-pic-url').value;
+    currentData.about.profilePicture = profilePicUrl;
+    saveData();
+});
+
+// Remove Profile Picture
+window.removeProfilePic = () => {
+    if (!confirm('Remove profile picture?')) return;
+    if (currentData.about) {
+        currentData.about.profilePicture = '';
+        saveData();
+    }
+};
 
 document.getElementById('about-intro-form').addEventListener('submit', (e) => {
     e.preventDefault();

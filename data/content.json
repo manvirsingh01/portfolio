@@ -31,37 +31,6 @@
       ],
       "items": [
         {
-          "id": 101,
-          "title": "First Website",
-          "image": "https://images.unsplash.com/photo-1547658719-da2b51169166?w=500&auto=format&fit=crop",
-          "githubUrl": "https://github.com/manvirsingh/first-website",
-          "description": "My journey into web development began with this simple yet elegant portfolio website. Built from scratch using HTML, CSS, and JavaScript, this project taught me the fundamentals of frontend development and responsive design.",
-          "liveUrl": "https://example.com/first-website",
-          "technologies": [
-            "HTML5",
-            "CSS3",
-            "JavaScript",
-            "Responsive Design"
-          ],
-          "futureScope": "Planning to add a blog section and integrate a contact form with backend functionality.",
-          "useCases": [
-            "Personal branding",
-            "Showcasing early projects",
-            "Learning platform basics"
-          ],
-          "contributors": [
-            {
-              "name": "Manvir Singh",
-              "githubUrl": "https://github.com/manvirsingh",
-              "avatar": "images/year_2023.png"
-            }
-          ],
-          "recommendations": [
-            102,
-            201
-          ]
-        },
-        {
           "id": 102,
           "title": "Calculator App",
           "image": "https://images.unsplash.com/photo-1587145820266-a5951eebebb1?w=500&auto=format&fit=crop",

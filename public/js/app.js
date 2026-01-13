@@ -512,6 +512,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (data.about) {
             document.getElementById('about-intro').innerText = data.about.intro;
 
+            // Profile Picture
+            const aboutProfilePic = document.getElementById('about-profile-pic');
+            const aboutNoProfile = document.getElementById('about-no-profile');
+            if (aboutProfilePic && data.about.profilePicture) {
+                aboutProfilePic.src = data.about.profilePicture;
+                aboutProfilePic.classList.remove('hidden');
+                if (aboutNoProfile) aboutNoProfile.classList.add('hidden');
+            }
+
             // Socials
             const socialContainer = document.getElementById('social-links');
             const icons = {

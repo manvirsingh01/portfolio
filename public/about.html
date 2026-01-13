@@ -60,9 +60,22 @@
 
         <!-- Intro & Socials -->
         <section class="max-w-4xl mx-auto text-center mb-20 animate-fade-in">
+            <!-- Profile Picture -->
+            <div id="profile-picture-container" class="mb-8">
+                <div
+                    class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full overflow-hidden bg-gray-700 ring-4 ring-red-600">
+                    <img id="about-profile-pic" src="" alt="Profile Picture" class="w-full h-full object-cover hidden">
+                    <div id="about-no-profile" class="w-full h-full flex items-center justify-center text-gray-500">
+                        <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
             <h1 class="text-4xl md:text-6xl font-bold mb-6">About Me</h1>
             <p id="about-intro" class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto"></p>
-            
+
             <div id="resume-container" class="flex justify-center gap-4 mb-8 hidden">
                 <!-- Resume Buttons Injected by JS -->
             </div>
