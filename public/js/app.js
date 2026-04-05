@@ -238,6 +238,71 @@ document.addEventListener('DOMContentLoaded', async () => {
                 rowsContainer.appendChild(rowSection);
             });
 
+            // Add Top 10 Blogs row (similar to Top 10 Projects)
+            const blogs = data.blogs || [];
+            if (blogs.length > 0) {
+                const top10Blogs = [...blogs]
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                    .slice(0, 10);
+
+                const top10BlogsRow = document.createElement('section');
+                top10BlogsRow.className = 'row-section mb-6 group px-4 md:px-[60px]';
+
+                let blogCardsHtml = '';
+                top10Blogs.forEach((blog, index) => {
+                    const date = new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    const readTime = Math.ceil((blog.content || '').split(' ').length / 200) || 1;
+                    const isFresh = Date.now() - new Date(blog.createdAt) < 7 * 24 * 60 * 60 * 1000;
+
+                    let badgesHtml = '';
+                    if (isFresh) badgesHtml += '<span class="badge badge-green">Fresh</span>';
+                    if (blog.featured) badgesHtml += '<span class="badge badge-red">Featured</span>';
+                    if (blog.tags && blog.tags[0]) badgesHtml += `<span class="badge">${blog.tags[0]}</span>`;
+
+                    blogCardsHtml += `
+                        <a href="blog.html?id=${blog.id}" class="project-card group/card relative flex-shrink-0 min-w-[320px] cursor-pointer mr-1" style="transform-origin: center center;">
+                            <span class="top10-number">${index + 1}</span>
+                            <div class="relative ml-[60px] h-[112px] md:h-[157px] bg-[#181818] rounded overflow-hidden">
+                                ${blog.coverImage 
+                                    ? `<img src="${blog.coverImage}" alt="${blog.title}" class="w-full h-full object-cover transition-all duration-300">`
+                                    : `<div class="w-full h-full bg-gradient-to-br from-[#6366f1] to-[#312e81] flex items-center justify-center">
+                                        <svg class="w-12 h-12 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                                        </svg>
+                                       </div>`
+                                }
+                            </div>
+                            <!-- Hover Panel -->
+                            <div class="card-hover-panel absolute left-0 right-0 ml-[60px] bg-[#181818] rounded-b p-3 shadow-xl">
+                                <div class="flex items-center justify-between mb-2">
+                                    <div class="flex gap-2">
+                                        <span class="card-action-btn primary" title="Read">
+                                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                        </span>
+                                    </div>
+                                    <span class="text-xs text-[#808080]">${readTime} min read</span>
+                                </div>
+                                ${badgesHtml ? `<div class="flex flex-wrap gap-1 mb-2">${badgesHtml}</div>` : ''}
+                                <h3 class="text-sm font-semibold mb-1 truncate">${blog.title}</h3>
+                                ${blog.excerpt ? `<p class="text-xs text-[#B3B3B3] line-clamp-2 mb-2">${blog.excerpt}</p>` : ''}
+                                <p class="text-xs text-[#808080]">${date}</p>
+                            </div>
+                        </a>
+                    `;
+                });
+
+                top10BlogsRow.innerHTML = `
+                    <div class="flex items-baseline gap-4 mb-3">
+                        <h2 class="row-title text-[1.05rem] font-semibold text-[#808080]">Top 10 Blogs</h2>
+                        <a href="blog.html" class="text-xs text-[#808080] opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-white">Explore All ›</a>
+                    </div>
+                    <div class="row-track flex gap-1 overflow-x-auto pb-[80px] -mb-[60px] no-scrollbar scroll-smooth">
+                        ${blogCardsHtml}
+                    </div>
+                `;
+                rowsContainer.appendChild(top10BlogsRow);
+            }
+
             // Add "Explore More" row with About and Skills navigation
             const exploreRow = document.createElement('section');
             exploreRow.className = 'row-section mb-6 group px-4 md:px-[60px]';
