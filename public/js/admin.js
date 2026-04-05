@@ -1,4 +1,5 @@
 const API_URL = '/api/content';
+const IMGBB_API_KEY = '666fb0955cdaa1276ec3e3a61a965011';
 
 let currentData = {};
 
@@ -19,6 +20,68 @@ function toast(message, type = 'success') {
         t.style.transition = 'opacity 0.3s';
         setTimeout(() => t.remove(), 300);
     }, 3000);
+}
+
+// ImgBB Upload Function
+async function uploadToImgBB(file) {
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+            return data.data.url;
+        } else {
+            throw new Error(data.error?.message || 'Upload failed');
+        }
+    } catch (err) {
+        console.error('ImgBB upload error:', err);
+        throw err;
+    }
+}
+
+// Setup ImgBB upload handlers
+function setupImgBBUploads() {
+    document.querySelectorAll('.imgbb-upload').forEach(input => {
+        input.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const targetId = input.dataset.target;
+            const targetInput = document.getElementById(targetId);
+            if (!targetInput) return;
+            
+            // Show loading state
+            const originalPlaceholder = targetInput.placeholder;
+            targetInput.placeholder = 'Uploading...';
+            targetInput.disabled = true;
+            
+            try {
+                toast('Uploading image...', 'info');
+                const url = await uploadToImgBB(file);
+                targetInput.value = url;
+                targetInput.placeholder = originalPlaceholder;
+                targetInput.disabled = false;
+                
+                // Trigger input event to update preview
+                targetInput.dispatchEvent(new Event('input'));
+                
+                toast('Image uploaded!', 'success');
+            } catch (err) {
+                targetInput.placeholder = originalPlaceholder;
+                targetInput.disabled = false;
+                toast('Upload failed: ' + err.message, 'error');
+            }
+            
+            // Reset file input
+            e.target.value = '';
+        });
+    });
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -43,6 +106,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupImagePreview('p-banner', 'p-banner-preview');
     setupImagePreview('edit-image', 'edit-image-preview');
     setupImagePreview('edit-banner', 'edit-banner-preview');
+    
+    // Setup ImgBB image uploads
+    setupImgBBUploads();
 
     // Skill level slider
     const levelSlider = document.getElementById('s-level');
@@ -80,6 +146,7 @@ async function loadData() {
         renderAbout();
         renderExperience();
         renderRows();
+        renderProfiles();
     } catch (e) {
         console.error("Error loading data", e);
         toast('Error loading data', 'error');
@@ -153,14 +220,30 @@ function renderProjects() {
                         </div>
                     </div>
                     <div class="flex gap-2 flex-shrink-0 ml-2">
-                        <button onclick="editProject(${item.id}, '${row.title}')" class="text-blue-400 hover:text-blue-300 text-xs font-medium px-2 py-1 rounded border border-blue-400 hover:bg-blue-500/10">Edit</button>
-                        <button onclick="deleteItem(${item.id}, '${row.title}')" class="text-red-500 hover:text-red-400 text-xs font-medium px-2 py-1 rounded border border-red-500 hover:bg-red-500/10">×</button>
+                        <button class="text-blue-400 hover:text-blue-300 text-xs font-medium px-2 py-1 rounded border border-blue-400 hover:bg-blue-500/10 edit-project-btn" data-id="${item.id}" data-row="${row.title}">Edit</button>
+                        <button class="text-red-500 hover:text-red-400 text-xs font-medium px-2 py-1 rounded border border-red-500 hover:bg-red-500/10 delete-project-btn" data-id="${item.id}" data-row="${row.title}">×</button>
                     </div>
                 `;
                 itemsList.appendChild(div);
             });
         });
     }
+    
+    // Event delegation for project buttons
+    itemsList.onclick = (e) => {
+        const editBtn = e.target.closest('.edit-project-btn');
+        const deleteBtn = e.target.closest('.delete-project-btn');
+        
+        if (editBtn) {
+            const id = parseInt(editBtn.dataset.id);
+            const rowTitle = editBtn.dataset.row;
+            editProject(id, rowTitle);
+        } else if (deleteBtn) {
+            const id = parseInt(deleteBtn.dataset.id);
+            const rowTitle = deleteBtn.dataset.row;
+            deleteItem(id, rowTitle);
+        }
+    };
 }
 
 window.editProject = (itemId, rowTitle) => {
@@ -331,18 +414,82 @@ window.deleteItem = (itemId, rowTitle) => {
 // ===== SKILLS SECTION =====
 function renderSkills() {
     const list = document.getElementById('skills-list');
+    const categorySelect = document.getElementById('s-category');
+    const editCategorySelect = document.getElementById('edit-s-category');
+    const categoriesList = document.getElementById('categories-list');
+    
+    // Get unique categories
+    const categories = [...new Set((currentData.skills || []).map(s => s.category))].filter(c => c);
+    
+    // Populate category dropdowns
+    if (categorySelect) {
+        categorySelect.innerHTML = '<option value="">Select Category</option>';
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.textContent = cat;
+            categorySelect.appendChild(option);
+        });
+    }
+    
+    if (editCategorySelect) {
+        editCategorySelect.innerHTML = '';
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat;
+            option.textContent = cat;
+            editCategorySelect.appendChild(option);
+        });
+    }
+    
+    // Render categories management list
+    if (categoriesList) {
+        categoriesList.innerHTML = '';
+        categories.forEach(cat => {
+            const skillCount = currentData.skills.filter(s => s.category === cat).length;
+            const div = document.createElement('div');
+            div.className = "flex justify-between items-center bg-[#222] p-2 rounded hover:bg-[#333] transition";
+            div.innerHTML = `
+                <div class="flex items-center gap-2 flex-1 min-w-0">
+                    <span class="text-sm truncate">${cat}</span>
+                    <span class="text-xs text-[#808080]">(${skillCount})</span>
+                </div>
+                <div class="flex gap-1">
+                    <button class="text-blue-400 hover:text-blue-300 text-xs px-2 py-1 edit-cat-btn" data-cat="${cat}">Edit</button>
+                    <button class="text-red-500 hover:text-red-400 text-xs px-2 py-1 delete-cat-btn" data-cat="${cat}">×</button>
+                </div>
+            `;
+            categoriesList.appendChild(div);
+        });
+        if (categories.length === 0) {
+            categoriesList.innerHTML = '<p class="text-sm text-[#808080]">No categories yet</p>';
+        } else {
+            // Event delegation for category buttons
+            categoriesList.onclick = (e) => {
+                const editBtn = e.target.closest('.edit-cat-btn');
+                const deleteBtn = e.target.closest('.delete-cat-btn');
+                
+                if (editBtn) {
+                    editCategory(editBtn.dataset.cat);
+                } else if (deleteBtn) {
+                    deleteCategory(deleteBtn.dataset.cat);
+                }
+            };
+        }
+    }
+
     if (!list) return;
     
     list.innerHTML = '';
     if (currentData.skills) {
         // Group by category
-        const categories = {};
+        const categoriesMap = {};
         currentData.skills.forEach(skill => {
-            if (!categories[skill.category]) categories[skill.category] = [];
-            categories[skill.category].push(skill);
+            if (!categoriesMap[skill.category]) categoriesMap[skill.category] = [];
+            categoriesMap[skill.category].push(skill);
         });
 
-        for (const [category, skills] of Object.entries(categories)) {
+        for (const [category, skills] of Object.entries(categoriesMap)) {
             const catHeader = document.createElement('div');
             catHeader.className = 'text-xs text-[#808080] font-semibold uppercase tracking-wide mt-4 first:mt-0 mb-2';
             catHeader.textContent = category;
@@ -351,6 +498,7 @@ function renderSkills() {
             skills.forEach(skill => {
                 const div = document.createElement('div');
                 div.className = "flex justify-between items-center bg-[#222] p-3 rounded hover:bg-[#333] transition";
+                const skillId = String(skill.id);
                 div.innerHTML = `
                     <div class="flex items-center gap-3 flex-1">
                         <span class="font-semibold text-sm">${skill.name}</span>
@@ -359,31 +507,128 @@ function renderSkills() {
                         </div>
                         <span class="text-xs text-[#808080]">${skill.level}%</span>
                     </div>
-                    <button onclick="deleteSkill(${skill.id})" class="text-red-500 hover:text-red-400 text-xs ml-2">×</button>
+                    <div class="flex gap-1 ml-2">
+                        <button class="text-blue-400 hover:text-blue-300 text-xs px-2 py-1 edit-skill-btn" data-id="${skillId}">Edit</button>
+                        <button class="text-red-500 hover:text-red-400 text-xs px-2 py-1 delete-skill-btn" data-id="${skillId}">×</button>
+                    </div>
                 `;
                 list.appendChild(div);
             });
         }
+    }
+    
+    // Add event listeners for skill buttons using event delegation
+    if (list) {
+        list.onclick = (e) => {
+            const editBtn = e.target.closest('.edit-skill-btn');
+            const deleteBtn = e.target.closest('.delete-skill-btn');
+            
+            if (editBtn) {
+                const id = editBtn.dataset.id;
+                editSkill(id);
+            } else if (deleteBtn) {
+                const id = deleteBtn.dataset.id;
+                deleteSkill(id);
+            }
+        };
     }
 }
 
 document.getElementById('add-skill-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!currentData.skills) currentData.skills = [];
+    
+    // Check if new category was entered
+    const newCategory = document.getElementById('s-new-category').value.trim();
+    const selectedCategory = document.getElementById('s-category').value;
+    const category = newCategory || selectedCategory;
+    
+    if (!category) {
+        toast('Please select or enter a category', 'error');
+        return;
+    }
+    
     currentData.skills.push({
         id: Date.now(),
         name: document.getElementById('s-name').value,
         level: parseInt(document.getElementById('s-level').value),
-        category: document.getElementById('s-category').value
+        category: category
     });
     saveData();
     e.target.reset();
     document.getElementById('s-level-value').textContent = '50%';
+    document.getElementById('s-new-category').value = '';
 });
 
 window.deleteSkill = (id) => {
     if (!confirm('Delete skill?')) return;
-    currentData.skills = currentData.skills.filter(s => s.id !== id);
+    const numId = typeof id === 'string' ? parseInt(id) : id;
+    currentData.skills = currentData.skills.filter(s => s.id !== numId);
+    saveData();
+};
+
+window.editSkill = (id) => {
+    const numId = typeof id === 'string' ? parseInt(id) : id;
+    const skill = currentData.skills.find(s => s.id === numId);
+    if (!skill) return;
+    
+    document.getElementById('edit-skill-prompt').classList.add('hidden');
+    document.getElementById('edit-skill-form').classList.remove('hidden');
+    
+    document.getElementById('edit-skill-id').value = numId;
+    document.getElementById('edit-s-name').value = skill.name;
+    document.getElementById('edit-s-level').value = skill.level;
+    document.getElementById('edit-s-level-value').textContent = skill.level + '%';
+    document.getElementById('edit-s-category').value = skill.category;
+};
+
+window.cancelEditSkill = () => {
+    document.getElementById('edit-skill-prompt').classList.remove('hidden');
+    document.getElementById('edit-skill-form').classList.add('hidden');
+    document.getElementById('edit-skill-form').reset();
+};
+
+document.getElementById('edit-skill-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const id = parseInt(document.getElementById('edit-skill-id').value);
+    const skill = currentData.skills.find(s => s.id === id);
+    if (!skill) return;
+    
+    skill.name = document.getElementById('edit-s-name').value;
+    skill.level = parseInt(document.getElementById('edit-s-level').value);
+    skill.category = document.getElementById('edit-s-category').value;
+    
+    saveData();
+    cancelEditSkill();
+});
+
+// Edit skill level slider
+const editLevelSlider = document.getElementById('edit-s-level');
+const editLevelValue = document.getElementById('edit-s-level-value');
+if (editLevelSlider && editLevelValue) {
+    editLevelSlider.addEventListener('input', () => {
+        editLevelValue.textContent = editLevelSlider.value + '%';
+    });
+}
+
+window.editCategory = (oldName) => {
+    const newName = prompt('Enter new category name:', oldName);
+    if (!newName || newName.trim() === '' || newName === oldName) return;
+    
+    // Update all skills with this category
+    currentData.skills.forEach(skill => {
+        if (skill.category === oldName) {
+            skill.category = newName.trim();
+        }
+    });
+    saveData();
+};
+
+window.deleteCategory = (categoryName) => {
+    const skillCount = currentData.skills.filter(s => s.category === categoryName).length;
+    if (!confirm(`Delete category "${categoryName}"? This will also delete ${skillCount} skill(s) in this category.`)) return;
+    
+    currentData.skills = currentData.skills.filter(s => s.category !== categoryName);
     saveData();
 };
 
@@ -396,21 +641,41 @@ function renderAbout() {
         const list = document.getElementById('timeline-list');
         if (list) {
             list.innerHTML = '';
-            if (currentData.about.timeline) {
+            if (currentData.about.timeline && currentData.about.timeline.length > 0) {
+                const timelineLen = currentData.about.timeline.length;
                 currentData.about.timeline.forEach((t, idx) => {
                     const div = document.createElement('div');
                     div.className = "bg-[#222] p-3 rounded flex justify-between items-start hover:bg-[#333] transition";
                     div.innerHTML = `
-                        <div>
+                        <div class="flex-1">
                             <span class="text-[#E50914] font-bold text-sm">${t.year}</span>
                             <span class="text-white font-semibold text-sm ml-2">${t.title}</span>
                             <p class="text-xs text-[#808080] mt-1">${t.desc}</p>
                         </div>
-                        <button onclick="deleteTimeline(${idx})" class="text-red-500 hover:text-red-400 text-xs ml-2 flex-shrink-0">×</button>
+                        <div class="flex gap-1 ml-2 flex-shrink-0">
+                            <button class="text-[#808080] hover:text-white text-xs px-1 move-timeline-up-btn" data-idx="${idx}" ${idx === 0 ? 'disabled style="opacity:0.3"' : ''}>↑</button>
+                            <button class="text-[#808080] hover:text-white text-xs px-1 move-timeline-down-btn" data-idx="${idx}" ${idx === timelineLen - 1 ? 'disabled style="opacity:0.3"' : ''}>↓</button>
+                            <button class="text-red-500 hover:text-red-400 text-xs px-1 delete-timeline-btn" data-idx="${idx}">×</button>
+                        </div>
                     `;
                     list.appendChild(div);
                 });
             }
+            
+            // Event delegation for timeline buttons
+            list.onclick = (e) => {
+                const upBtn = e.target.closest('.move-timeline-up-btn');
+                const downBtn = e.target.closest('.move-timeline-down-btn');
+                const deleteBtn = e.target.closest('.delete-timeline-btn');
+                
+                if (upBtn && !upBtn.disabled) {
+                    moveTimelineUp(parseInt(upBtn.dataset.idx));
+                } else if (downBtn && !downBtn.disabled) {
+                    moveTimelineDown(parseInt(downBtn.dataset.idx));
+                } else if (deleteBtn) {
+                    deleteTimeline(parseInt(deleteBtn.dataset.idx));
+                }
+            };
         }
     }
 
@@ -462,6 +727,12 @@ document.getElementById('add-timeline-form')?.addEventListener('submit', (e) => 
         title: document.getElementById('t-title').value,
         desc: document.getElementById('t-desc').value
     });
+    // Auto-sort by year (descending - newest first)
+    currentData.about.timeline.sort((a, b) => {
+        const yearA = parseInt(a.year) || 0;
+        const yearB = parseInt(b.year) || 0;
+        return yearB - yearA;
+    });
     saveData();
     e.target.reset();
 });
@@ -470,6 +741,22 @@ window.deleteTimeline = (idx) => {
     if (!confirm('Delete this timeline event?')) return;
     currentData.about.timeline.splice(idx, 1);
     saveData();
+};
+
+window.moveTimelineUp = (idx) => {
+    if (idx > 0) {
+        const timeline = currentData.about.timeline;
+        [timeline[idx - 1], timeline[idx]] = [timeline[idx], timeline[idx - 1]];
+        saveData();
+    }
+};
+
+window.moveTimelineDown = (idx) => {
+    const timeline = currentData.about.timeline;
+    if (idx < timeline.length - 1) {
+        [timeline[idx], timeline[idx + 1]] = [timeline[idx + 1], timeline[idx]];
+        saveData();
+    }
 };
 
 // Profile Picture
@@ -533,7 +820,7 @@ function renderExperience() {
                         <h4 class="font-bold text-sm">${exp.role}</h4>
                         <p class="text-[#E50914] text-sm">${exp.company}</p>
                     </div>
-                    <button onclick="deleteExperience(${exp.id})" class="text-red-500 hover:text-red-400 text-xs">×</button>
+                    <button class="text-red-500 hover:text-red-400 text-xs delete-exp-btn" data-id="${exp.id}">×</button>
                 </div>
                 <p class="text-xs text-[#808080] mb-1">${exp.duration}</p>
                 <p class="text-xs text-[#B3B3B3]">${exp.description}</p>
@@ -541,6 +828,15 @@ function renderExperience() {
             list.appendChild(div);
         });
     }
+    
+    // Event delegation for experience delete
+    list.onclick = (e) => {
+        const deleteBtn = e.target.closest('.delete-exp-btn');
+        if (deleteBtn) {
+            const id = parseInt(deleteBtn.dataset.id);
+            deleteExperience(id);
+        }
+    };
 }
 
 document.getElementById('add-experience-form')?.addEventListener('submit', (e) => {
@@ -600,9 +896,9 @@ function renderRows() {
                         <p class="text-xs text-[#808080]">${row.items.length} projects · ${row.style || 'standard'}</p>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="moveRowUp(${idx})" class="text-[#808080] hover:text-white text-xs" ${idx === 0 ? 'disabled' : ''}>↑</button>
-                        <button onclick="moveRowDown(${idx})" class="text-[#808080] hover:text-white text-xs" ${idx === currentData.rows.length - 1 ? 'disabled' : ''}>↓</button>
-                        <button onclick="deleteRow(${idx})" class="text-red-500 hover:text-red-400 text-xs">×</button>
+                        <button class="text-[#808080] hover:text-white text-xs move-row-up-btn" data-idx="${idx}" ${idx === 0 ? 'disabled' : ''}>↑</button>
+                        <button class="text-[#808080] hover:text-white text-xs move-row-down-btn" data-idx="${idx}" ${idx === currentData.rows.length - 1 ? 'disabled' : ''}>↓</button>
+                        <button class="text-red-500 hover:text-red-400 text-xs delete-row-btn" data-idx="${idx}">×</button>
                     </div>
                 </div>
                 <p class="text-xs text-[#808080]">Profiles: ${profileNames}</p>
@@ -610,6 +906,21 @@ function renderRows() {
             list.appendChild(div);
         });
     }
+    
+    // Event delegation for row buttons
+    list.onclick = (e) => {
+        const upBtn = e.target.closest('.move-row-up-btn');
+        const downBtn = e.target.closest('.move-row-down-btn');
+        const deleteBtn = e.target.closest('.delete-row-btn');
+        
+        if (upBtn) {
+            moveRowUp(parseInt(upBtn.dataset.idx));
+        } else if (downBtn) {
+            moveRowDown(parseInt(downBtn.dataset.idx));
+        } else if (deleteBtn) {
+            deleteRow(parseInt(deleteBtn.dataset.idx));
+        }
+    };
 }
 
 document.getElementById('add-row-form')?.addEventListener('submit', (e) => {
@@ -654,4 +965,135 @@ window.moveRowDown = (idx) => {
         [currentData.rows[idx], currentData.rows[idx + 1]] = [currentData.rows[idx + 1], currentData.rows[idx]];
         saveData();
     }
+};
+
+// ===== PROFILES SECTION =====
+function renderProfiles() {
+    const list = document.getElementById('profiles-list');
+    if (!list) return;
+    
+    list.innerHTML = '';
+    if (currentData.profiles) {
+        currentData.profiles.forEach(profile => {
+            const div = document.createElement('div');
+            div.className = "flex justify-between items-center bg-[#222] p-4 rounded hover:bg-[#333] transition";
+            div.innerHTML = `
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-[#333] overflow-hidden ring-2 ring-[#E50914]">
+                        ${profile.avatar 
+                            ? `<img src="${profile.avatar}" alt="${profile.name}" class="w-full h-full object-cover" onerror="this.style.display='none'">` 
+                            : `<div class="w-full h-full flex items-center justify-center text-[#E50914] font-bold text-lg">${profile.name.charAt(0)}</div>`
+                        }
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg">${profile.name}</h4>
+                        <p class="text-xs text-[#808080]">ID: ${profile.id}</p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button class="text-blue-400 hover:text-blue-300 text-xs px-3 py-2 rounded border border-blue-400 hover:bg-blue-500/10 edit-profile-btn" data-id="${profile.id}">Edit</button>
+                    <button class="text-red-500 hover:text-red-400 text-xs px-3 py-2 rounded border border-red-500 hover:bg-red-500/10 delete-profile-btn" data-id="${profile.id}">×</button>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    }
+    
+    if (!currentData.profiles || currentData.profiles.length === 0) {
+        list.innerHTML = '<p class="text-center text-[#808080] py-4">No profiles yet</p>';
+        return;
+    }
+    
+    // Event delegation for profile buttons
+    list.onclick = (e) => {
+        const editBtn = e.target.closest('.edit-profile-btn');
+        const deleteBtn = e.target.closest('.delete-profile-btn');
+        
+        if (editBtn) {
+            editProfile(parseInt(editBtn.dataset.id));
+        } else if (deleteBtn) {
+            deleteProfile(parseInt(deleteBtn.dataset.id));
+        }
+    };
+}
+
+document.getElementById('add-profile-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!currentData.profiles) currentData.profiles = [];
+    
+    const name = document.getElementById('profile-name').value.trim();
+    const avatar = document.getElementById('profile-avatar').value.trim();
+    
+    // Generate new ID
+    const maxId = currentData.profiles.reduce((max, p) => Math.max(max, p.id), 0);
+    
+    currentData.profiles.push({
+        id: maxId + 1,
+        name: name,
+        avatar: avatar || `images/year_${name}.png`
+    });
+    
+    saveData();
+    e.target.reset();
+    toast('Profile added!', 'success');
+});
+
+window.editProfile = (id) => {
+    const profile = currentData.profiles.find(p => p.id === id);
+    if (!profile) return;
+    
+    document.getElementById('edit-profile-prompt').classList.add('hidden');
+    document.getElementById('edit-profile-form').classList.remove('hidden');
+    
+    document.getElementById('edit-profile-id').value = id;
+    document.getElementById('edit-profile-name').value = profile.name;
+    document.getElementById('edit-profile-avatar').value = profile.avatar || '';
+};
+
+window.cancelEditProfile = () => {
+    document.getElementById('edit-profile-prompt').classList.remove('hidden');
+    document.getElementById('edit-profile-form').classList.add('hidden');
+    document.getElementById('edit-profile-form').reset();
+};
+
+document.getElementById('edit-profile-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const id = parseInt(document.getElementById('edit-profile-id').value);
+    const profile = currentData.profiles.find(p => p.id === id);
+    if (!profile) return;
+    
+    profile.name = document.getElementById('edit-profile-name').value.trim();
+    profile.avatar = document.getElementById('edit-profile-avatar').value.trim();
+    
+    saveData();
+    cancelEditProfile();
+    toast('Profile updated!', 'success');
+});
+
+window.deleteProfile = (id) => {
+    const profile = currentData.profiles.find(p => p.id === id);
+    if (!profile) return;
+    
+    // Check if profile is used in any rows
+    const usedInRows = currentData.rows.filter(r => r.profileIds && r.profileIds.includes(id));
+    
+    let msg = `Delete profile "${profile.name}"?`;
+    if (usedInRows.length > 0) {
+        msg += `\n\nThis profile is used in ${usedInRows.length} row(s). It will be removed from those rows.`;
+    }
+    
+    if (!confirm(msg)) return;
+    
+    // Remove profile
+    currentData.profiles = currentData.profiles.filter(p => p.id !== id);
+    
+    // Remove from rows
+    currentData.rows.forEach(row => {
+        if (row.profileIds) {
+            row.profileIds = row.profileIds.filter(pid => pid !== id);
+        }
+    });
+    
+    saveData();
+    toast('Profile deleted!', 'success');
 };

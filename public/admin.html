@@ -103,6 +103,8 @@
                 class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Experience</button>
             <button onclick="switchTab('rows')" id="tab-rows"
                 class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Rows</button>
+            <button onclick="switchTab('profiles')" id="tab-profiles"
+                class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Profiles</button>
         </div>
 
         <!-- PROJECTS TAB -->
@@ -119,17 +121,29 @@
                                 required>
                         </div>
                         <div>
-                            <label class="block text-sm text-[#B3B3B3] mb-1">Thumbnail URL *</label>
-                            <input type="url" id="p-image"
-                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
-                                placeholder="https://..." required>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Thumbnail Image *</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="p-image"
+                                    class="flex-1 bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                    placeholder="https://..." required>
+                                <label class="bg-[#E50914] hover:bg-[#F40612] text-white text-sm px-3 py-3 rounded cursor-pointer transition flex items-center gap-1">
+                                    <span>📷</span>
+                                    <input type="file" accept="image/*" class="hidden imgbb-upload" data-target="p-image">
+                                </label>
+                            </div>
                             <img id="p-image-preview" class="image-preview hidden" src="" alt="Preview">
                         </div>
                         <div>
-                            <label class="block text-sm text-[#B3B3B3] mb-1">Banner Image URL</label>
-                            <input type="url" id="p-banner"
-                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
-                                placeholder="Wide image for hero (optional)">
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Banner Image</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="p-banner"
+                                    class="flex-1 bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                    placeholder="Wide image for hero (optional)">
+                                <label class="bg-[#E50914] hover:bg-[#F40612] text-white text-sm px-3 py-3 rounded cursor-pointer transition flex items-center gap-1">
+                                    <span>📷</span>
+                                    <input type="file" accept="image/*" class="hidden imgbb-upload" data-target="p-banner">
+                                </label>
+                            </div>
                             <img id="p-banner-preview" class="image-preview hidden" src="" alt="Preview">
                         </div>
                         <div>
@@ -219,16 +233,28 @@
                         </div>
 
                         <div>
-                            <label class="block text-sm text-[#B3B3B3] mb-1">Thumbnail URL</label>
-                            <input type="url" id="edit-image"
-                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]">
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Thumbnail Image</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="edit-image"
+                                    class="flex-1 bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]">
+                                <label class="bg-[#E50914] hover:bg-[#F40612] text-white text-sm px-3 py-3 rounded cursor-pointer transition flex items-center gap-1">
+                                    <span>📷</span>
+                                    <input type="file" accept="image/*" class="hidden imgbb-upload" data-target="edit-image">
+                                </label>
+                            </div>
                             <img id="edit-image-preview" class="image-preview hidden" src="" alt="Preview">
                         </div>
 
                         <div>
-                            <label class="block text-sm text-[#B3B3B3] mb-1">Banner Image URL</label>
-                            <input type="url" id="edit-banner"
-                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]">
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Banner Image</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="edit-banner"
+                                    class="flex-1 bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]">
+                                <label class="bg-[#E50914] hover:bg-[#F40612] text-white text-sm px-3 py-3 rounded cursor-pointer transition flex items-center gap-1">
+                                    <span>📷</span>
+                                    <input type="file" accept="image/*" class="hidden imgbb-upload" data-target="edit-banner">
+                                </label>
+                            </div>
                             <img id="edit-banner-preview" class="image-preview hidden" src="" alt="Preview">
                         </div>
 
@@ -337,7 +363,8 @@
         </div>
 
         <!-- SKILLS TAB -->
-        <div id="view-skills" class="tab-content hidden grid md:grid-cols-2 gap-8">
+        <div id="view-skills" class="tab-content hidden grid md:grid-cols-3 gap-8">
+            <!-- Add New Skill -->
             <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
                 <h2 class="text-xl font-bold mb-6">Add New Skill</h2>
                 <form id="add-skill-form" class="space-y-4">
@@ -359,14 +386,68 @@
                     </div>
                     <div>
                         <label class="block text-sm text-[#B3B3B3] mb-1">Category</label>
-                        <input type="text" id="s-category"
+                        <select id="s-category"
                             class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
-                            placeholder="Frontend, Backend, etc." required>
+                            required>
+                        </select>
+                        <div class="mt-2">
+                            <input type="text" id="s-new-category"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914] text-sm"
+                                placeholder="Or add new category...">
+                        </div>
                     </div>
                     <button type="submit"
                         class="w-full bg-[#E50914] hover:bg-[#F40612] text-white font-bold py-3 rounded transition mt-4">Add Skill</button>
                 </form>
             </section>
+
+            <!-- Edit Skill -->
+            <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Edit Skill</h2>
+                <div id="edit-skill-prompt" class="text-center py-8 text-[#808080]">
+                    <p>Click "Edit" on a skill to edit it</p>
+                </div>
+                <form id="edit-skill-form" class="space-y-4 hidden">
+                    <input type="hidden" id="edit-skill-id">
+                    <div>
+                        <label class="block text-sm text-[#B3B3B3] mb-1">Skill Name</label>
+                        <input type="text" id="edit-s-name"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                            required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-[#B3B3B3] mb-1">Level (0-100)</label>
+                        <input type="range" id="edit-s-level" min="0" max="100" value="50"
+                            class="w-full accent-[#E50914]">
+                        <div class="flex justify-between text-xs text-[#808080] mt-1">
+                            <span>0%</span>
+                            <span id="edit-s-level-value">50%</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-[#B3B3B3] mb-1">Category</label>
+                        <select id="edit-s-category"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                            required>
+                        </select>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="submit"
+                            class="flex-1 bg-[#E50914] hover:bg-[#F40612] text-white font-bold py-3 rounded transition">Save</button>
+                        <button type="button" onclick="cancelEditSkill()"
+                            class="flex-1 bg-[#333] hover:bg-[#444] text-white font-bold py-3 rounded transition">Cancel</button>
+                    </div>
+                </form>
+
+                <!-- Manage Categories -->
+                <div class="mt-8 pt-6 border-t border-gray-700">
+                    <h3 class="text-lg font-bold mb-4">Manage Categories</h3>
+                    <div id="categories-list" class="space-y-2 max-h-[200px] overflow-y-auto custom-scroll pr-2"></div>
+                </div>
+            </section>
+
+            <!-- Manage Skills List -->
             <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
                 <h2 class="text-xl font-bold mb-6">Manage Skills</h2>
                 <div id="skills-list" class="space-y-3 max-h-[500px] overflow-y-auto custom-scroll pr-2"></div>
@@ -395,10 +476,16 @@
                     </div>
                     <form id="profile-pic-form" class="space-y-3">
                         <div>
-                            <label class="block text-sm text-[#B3B3B3] mb-1">Profile Picture URL</label>
-                            <input type="url" id="profile-pic-url"
-                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
-                                placeholder="https://example.com/your-photo.jpg">
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Profile Picture</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="profile-pic-url"
+                                    class="flex-1 bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                    placeholder="https://example.com/your-photo.jpg">
+                                <label class="bg-[#E50914] hover:bg-[#F40612] text-white text-sm px-3 py-3 rounded cursor-pointer transition flex items-center gap-1">
+                                    <span>📷</span>
+                                    <input type="file" accept="image/*" class="hidden imgbb-upload" data-target="profile-pic-url">
+                                </label>
+                            </div>
                         </div>
                         <button type="submit"
                             class="w-full bg-[#E50914] hover:bg-[#F40612] text-white font-bold py-2 rounded transition">Update Profile Picture</button>
@@ -512,6 +599,74 @@
                     <div id="rows-list" class="space-y-3 max-h-[500px] overflow-y-auto custom-scroll pr-2"></div>
                 </section>
             </div>
+        </div>
+
+        <!-- PROFILES TAB -->
+        <div id="view-profiles" class="tab-content hidden grid md:grid-cols-2 gap-8">
+            <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Add New Profile</h2>
+                <form id="add-profile-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-[#B3B3B3] mb-1">Profile Name (Year)</label>
+                        <input type="text" id="profile-name"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                            placeholder="e.g. 2026" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-[#B3B3B3] mb-1">Avatar Image</label>
+                        <div class="flex gap-2">
+                            <input type="url" id="profile-avatar"
+                                class="flex-1 bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                placeholder="images/year_2026.png">
+                            <label class="bg-[#E50914] hover:bg-[#F40612] text-white text-sm px-3 py-3 rounded cursor-pointer transition flex items-center gap-1">
+                                <span>📷</span>
+                                <input type="file" accept="image/*" class="hidden imgbb-upload" data-target="profile-avatar">
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-[#E50914] hover:bg-[#F40612] text-white font-bold py-3 rounded transition mt-4">Add Profile</button>
+                </form>
+
+                <!-- Edit Profile -->
+                <div class="mt-8 pt-6 border-t border-gray-700">
+                    <h3 class="text-lg font-bold mb-4">Edit Profile</h3>
+                    <div id="edit-profile-prompt" class="text-center py-4 text-[#808080]">
+                        <p>Click "Edit" on a profile to edit it</p>
+                    </div>
+                    <form id="edit-profile-form" class="space-y-4 hidden">
+                        <input type="hidden" id="edit-profile-id">
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Profile Name</label>
+                            <input type="text" id="edit-profile-name"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Avatar Image</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="edit-profile-avatar"
+                                    class="flex-1 bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]">
+                                <label class="bg-[#E50914] hover:bg-[#F40612] text-white text-sm px-3 py-3 rounded cursor-pointer transition flex items-center gap-1">
+                                    <span>📷</span>
+                                    <input type="file" accept="image/*" class="hidden imgbb-upload" data-target="edit-profile-avatar">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="submit"
+                                class="flex-1 bg-[#E50914] hover:bg-[#F40612] text-white font-bold py-3 rounded transition">Save</button>
+                            <button type="button" onclick="cancelEditProfile()"
+                                class="flex-1 bg-[#333] hover:bg-[#444] text-white font-bold py-3 rounded transition">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Manage Profiles</h2>
+                <p class="text-sm text-[#808080] mb-4">These profiles appear on the home page. Users select a year to browse your portfolio.</p>
+                <div id="profiles-list" class="space-y-3 max-h-[500px] overflow-y-auto custom-scroll pr-2"></div>
+            </section>
         </div>
 
     </div>

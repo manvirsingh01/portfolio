@@ -2,18 +2,8 @@
   "profiles": [
     {
       "id": 1,
-      "name": "2023",
-      "avatar": "images/year_2023.png"
-    },
-    {
-      "id": 2,
-      "name": "2024",
-      "avatar": "images/year_2024.png"
-    },
-    {
-      "id": 3,
-      "name": "2025",
-      "avatar": "images/year_2025.png"
+      "name": "its manvir singh",
+      "avatar": "https://ibb.co/QjJDsP2B"
     }
   ],
   "hero": {
@@ -27,144 +17,111 @@
     {
       "title": "Top 10 Projects",
       "profileIds": [
-        1,
-        2,
-        3
+        1
       ],
       "style": "top10",
       "items": [
         {
-          "id": 101,
-          "title": "Netflix Clone Portfolio",
-          "image": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600",
-          "bannerImage": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1200",
-          "shortDesc": "A pixel-perfect Netflix UI recreation with dynamic content",
-          "description": "Complete Netflix clone with profile selection, card animations, search functionality, and admin dashboard.",
-          "year": 2024,
-          "difficulty": "Advanced",
-          "status": "Live",
-          "buildTime": "3 weeks",
-          "githubUrl": "https://github.com/manvirsingh/portfolio",
-          "liveUrl": "#",
-          "technologies": [
-            "Node.js",
-            "Express",
-            "Tailwind CSS",
-            "JavaScript"
-          ],
-          "useCases": [
-            "Portfolio showcase",
-            "Netflix UI study",
-            "Frontend practice"
-          ],
-          "futureScope": "Add user authentication and watch history"
-        },
-        {
-          "id": 102,
-          "title": "AI Chat Assistant",
-          "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
-          "shortDesc": "Real-time AI-powered chat interface with memory",
-          "description": "A conversational AI assistant with context awareness and memory persistence.",
-          "year": 2024,
-          "difficulty": "Advanced",
-          "status": "Live",
-          "buildTime": "2 weeks",
-          "githubUrl": "#",
-          "technologies": [
-            "Python",
-            "OpenAI",
-            "React",
-            "Redis"
-          ]
-        },
-        {
-          "id": 103,
-          "title": "Task Manager Pro",
-          "image": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600",
-          "shortDesc": "Kanban-style task management with drag & drop",
-          "description": "Full-featured task manager with team collaboration and real-time sync.",
-          "year": 2024,
+          "id": 1775388255019,
+          "title": "Kishan Shaathe",
+          "image": "https://ibb.co/XxYBZC44",
+          "shortDesc": "Developed \"Kishan Saathi,\" a web-based platform designed to support farmers with accessible digital solutions. The application provides useful information and tools to assist in decision-making related to agriculture and resource management.  Built using modern full-stack technologies, the platform ensures a responsive and user-friendly interface. Integrated features such as real-time data handling, structured dashboards, and scalable architecture to enhance usability and performance.  Focused on solving real-world agricultural challenges by creating a reliable and efficient system that bridges the gap between technology and farming practices.",
+          "githubUrl": "https://github.com/manvirsingh01/kishan-saathi",
+          "liveUrl": "https://kishan-saathi.vercel.app",
+          "year": 2025,
           "difficulty": "Intermediate",
           "status": "Live",
           "buildTime": "1 month",
-          "githubUrl": "#",
-          "technologies": [
-            "React",
-            "Node.js",
-            "Socket.io",
-            "MongoDB"
-          ]
+          "description": "",
+          "technologies": [],
+          "useCases": [],
+          "futureScope": "",
+          "contributors": [],
+          "recommendations": []
+        },
+        {
+          "id": 1775388423850,
+          "title": "snow bytes",
+          "image": "https://ibb.co/r26tknNP",
+          "bannerImage": "https://ibb.co/r26tknNP",
+          "shortDesc": "Developed \"Snow Bytes,\" a modern web-based platform focused on delivering efficient and scalable digital solutions. The project showcases strong full-stack development skills with an emphasis on performance, clean UI design, and responsive user experience.  Implemented dynamic features, structured data handling, and optimized workflows to ensure smooth functionality. Designed with scalability and maintainability in mind, making it adaptable for real-world applications.  This project highlights practical problem-solving abilities and the use of modern technologies to build reliable and user-centric systems.",
+          "githubUrl": "https://github.com/manvirsingh01/alpha",
+          "liveUrl": "https://alpha-azure.vercel.app/#encoders/base64",
+          "year": 2025,
+          "difficulty": "Advanced",
+          "status": "Live",
+          "description": "",
+          "technologies": [],
+          "useCases": [],
+          "futureScope": "",
+          "contributors": [],
+          "recommendations": []
+        },
+        {
+          "id": 1775388578318,
+          "title": "netcat",
+          "image": "https://ibb.co/231DGkzj",
+          "bannerImage": "https://ibb.co/231DGkzj",
+          "shortDesc": "Developed a network utility tool using Netcat concepts to enable communication between systems over TCP/UDP protocols. The project demonstrates skills in network programming, port scanning, data transfer, and basic client-server architecture.  Implemented features such as connection handling, message exchange, and testing of network services, providing hands-on experience in cybersecurity and networking fundamentals.",
+          "githubUrl": "https://github.com/manvirsingh01/natcat",
+          "liveUrl": "https://natcat-nine.vercel.app",
+          "year": 2024,
+          "difficulty": "Beginner",
+          "status": "Live",
+          "buildTime": "1 week",
+          "description": "",
+          "technologies": [],
+          "useCases": [],
+          "futureScope": "",
+          "contributors": [],
+          "recommendations": []
+        },
+        {
+          "id": 1775388735063,
+          "title": "stego-vault",
+          "image": "https://ibb.co/Q3WvcXWs",
+          "bannerImage": "https://ibb.co/Q3WvcXWs",
+          "shortDesc": "Developed \"Stego Vault,\" a secure application that uses steganography techniques to hide sensitive data within digital images. The project enables users to embed and extract confidential information while maintaining the visual integrity of the image.  Implemented encryption mechanisms to ensure that only authorized users can access the hidden data, combining data security with covert communication. The system supports encoding and decoding workflows, making it a practical tool for secure data storage and transmission.  Focused on cybersecurity principles such as data privacy, confidentiality, and secure communication by leveraging image-based steganography methods, where information is concealed inside media files without raising suspicion.",
+          "githubUrl": "https://github.com/manvirsingh01/stego-vault",
+          "liveUrl": "https://stego-vault-delta.vercel.app",
+          "description": "",
+          "technologies": [],
+          "useCases": [],
+          "futureScope": "",
+          "contributors": [],
+          "recommendations": []
+        },
+        {
+          "id": 1775388945844,
+          "title": "ASL_ToolBox_qc_v01",
+          "image": "https://radiopaedia.org/articles/arterial-spin-labelling-mr-perfusion-2",
+          "bannerImage": "https://radiopaedia.org/articles/arterial-spin-labelling-mr-perfusion-2",
+          "shortDesc": "Developed \"ASL QC Toolbox,\" a specialized software tool designed for quality control and analysis in advanced system workflows. The project focuses on improving accuracy, efficiency, and reliability through automated validation and data processing techniques.  Implemented modular components to handle data inspection, error detection, and performance evaluation, enabling streamlined quality assurance processes. Designed with scalability and usability in mind, the system provides structured outputs and intuitive interfaces for efficient monitoring and analysis.  This project demonstrates strong skills in software development, problem-solving, and system optimization, with an emphasis on building practical tools for real-world technical applications.",
+          "githubUrl": "https://github.com/manvirsingh01/asl-qc-toolbox",
+          "liveUrl": "",
+          "year": 2026,
+          "difficulty": "Advanced",
+          "status": "In Dev",
+          "description": "",
+          "technologies": [],
+          "useCases": [],
+          "futureScope": "",
+          "contributors": [],
+          "recommendations": []
         }
       ]
     },
     {
       "title": "2024 Projects",
-      "profileIds": [
-        2
-      ],
+      "profileIds": [],
       "style": "standard",
-      "items": [
-        {
-          "id": 201,
-          "title": "E-Commerce Dashboard",
-          "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600",
-          "shortDesc": "Analytics dashboard for online stores",
-          "description": "Real-time sales analytics and inventory management dashboard.",
-          "year": 2024,
-          "difficulty": "Intermediate",
-          "status": "Live",
-          "buildTime": "3 weeks",
-          "githubUrl": "#",
-          "technologies": [
-            "React",
-            "D3.js",
-            "PostgreSQL"
-          ]
-        },
-        {
-          "id": 202,
-          "title": "Weather App",
-          "image": "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=600",
-          "shortDesc": "Beautiful weather forecasts with animations",
-          "description": "Location-based weather app with 7-day forecasts and animated backgrounds.",
-          "year": 2024,
-          "difficulty": "Beginner",
-          "status": "Live",
-          "buildTime": "1 week",
-          "githubUrl": "#",
-          "technologies": [
-            "JavaScript",
-            "OpenWeather API",
-            "CSS"
-          ]
-        }
-      ]
+      "items": []
     },
     {
       "title": "2025 Innovations",
-      "profileIds": [
-        3
-      ],
+      "profileIds": [],
       "style": "featured",
-      "items": [
-        {
-          "id": 301,
-          "title": "Neural Network Visualizer",
-          "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600",
-          "shortDesc": "Interactive 3D visualization of neural networks",
-          "description": "Educational tool to visualize how neural networks learn and process data.",
-          "year": 2025,
-          "difficulty": "Advanced",
-          "status": "In Dev",
-          "buildTime": "Ongoing",
-          "githubUrl": "#",
-          "technologies": [
-            "Three.js",
-            "TensorFlow.js",
-            "React"
-          ]
-        }
-      ]
+      "items": []
     },
     {
       "title": "2023 Projects",
@@ -172,41 +129,7 @@
         1
       ],
       "style": "standard",
-      "items": [
-        {
-          "id": 401,
-          "title": "Todo App",
-          "image": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600",
-          "shortDesc": "Simple yet powerful todo application",
-          "description": "My first full-stack project with CRUD operations and local storage.",
-          "year": 2023,
-          "difficulty": "Beginner",
-          "status": "Archived",
-          "buildTime": "3 days",
-          "githubUrl": "#",
-          "technologies": [
-            "HTML",
-            "CSS",
-            "JavaScript"
-          ]
-        },
-        {
-          "id": 402,
-          "title": "Calculator",
-          "image": "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=600",
-          "shortDesc": "Scientific calculator with history",
-          "description": "Feature-rich calculator with scientific functions and calculation history.",
-          "year": 2023,
-          "difficulty": "Beginner",
-          "status": "Archived",
-          "buildTime": "2 days",
-          "githubUrl": "#",
-          "technologies": [
-            "JavaScript",
-            "CSS Grid"
-          ]
-        }
-      ]
+      "items": []
     }
   ],
   "skills": [
@@ -232,11 +155,65 @@
       "id": 4,
       "name": "Python",
       "level": 80,
+      "category": "Programming"
+    },
+    {
+      "id": 1775384385628,
+      "name": "c++",
+      "level": 81,
+      "category": "Programming"
+    },
+    {
+      "id": 1775384398546,
+      "name": "C++",
+      "level": 90,
+      "category": "Programming"
+    },
+    {
+      "id": 1775384431179,
+      "name": "java",
+      "level": 84,
+      "category": "Programming"
+    },
+    {
+      "id": 1775384485359,
+      "name": "AWS (Amazon web service)",
+      "level": 77,
+      "category": "Technology"
+    },
+    {
+      "id": 1775384532830,
+      "name": "kotlin",
+      "level": 71,
+      "category": "Android Development"
+    },
+    {
+      "id": 1775384551651,
+      "name": "express.js",
+      "level": 50,
       "category": "Backend"
+    },
+    {
+      "id": 1775384615912,
+      "name": "next.js",
+      "level": 76,
+      "category": "Backend"
+    },
+    {
+      "id": 1775384636126,
+      "name": "MongoDB",
+      "level": 50,
+      "category": "Database"
+    },
+    {
+      "id": 1775384652414,
+      "name": "MySql",
+      "level": 50,
+      "category": "Database"
     }
   ],
   "about": {
-    "intro": "I am a passionate developer building the future of web.",
+    "intro": "Hi, I’m Manvir Singh\n\nI am a Cyber Security student at the National Forensic Science University with a strong interest in building practical and innovative technology solutions. I have experience in full-stack development, Android application development, and AI-based systems, working with modern tools and frameworks.\n\nI enjoy developing real-world projects, including intelligent chatbots, voice cloning systems, and scalable web applications. My core areas of interest include cybersecurity, artificial intelligence, and system design, where I focus on solving complex problems through structured and efficient approaches.\n\nI believe in learning through hands-on development, contributing to meaningful projects, and continuously improving my technical skills.\n\nI am currently focused on advancing my knowledge in AI, cybersecurity, and modern software development practices.",
     "socials": [
       {
         "platform": "GitHub",
@@ -253,37 +230,52 @@
     ],
     "timeline": [
       {
-        "year": "2025",
-        "title": "Senior Engineer",
-        "desc": "Leading AI integration projects."
+        "year": "2010",
+        "title": "School",
+        "desc": "Learn ABCD"
       },
       {
-        "year": "2024",
-        "title": "Full Stack Dev",
-        "desc": "Built multiple SaaS products."
+        "year": "2020",
+        "title": "Senior Secondary School",
+        "desc": "Learn the Hello World program in Python."
       },
       {
         "year": "2023",
-        "title": "Started Coding",
-        "desc": "Hello World!"
+        "title": "collage NFSU",
+        "desc": "Experience in Java, C, and C++."
+      },
+      {
+        "year": "2024",
+        "title": "cyber security",
+        "desc": "Felt interested in cybersecurity and started performing basic attack simulations."
+      },
+      {
+        "year": "2025",
+        "title": "Research Intern",
+        "desc": "IIT Jodhpur and get into the quantum computing"
+      },
+      {
+        "year": "2025",
+        "title": "Cybersecurity Trainee",
+        "desc": "Completed a 1-month training at NFSU Gandhinagar in malware analysis, cybersecurity, and IT-OT systems."
       }
     ],
-    "profilePicture": ""
+    "profilePicture": "https://photos.app.goo.gl/Sfet3SYsYHckQBjS6"
   },
   "experience": [
     {
-      "id": 1,
-      "role": "Senior Software Engineer",
-      "company": "Tech Corp",
-      "duration": "2024 - Present",
-      "description": "Leading the frontend team."
+      "id": 1775385515513,
+      "company": "iit jodhpur",
+      "role": "Research Intern",
+      "duration": "may 2025 - july 2025",
+      "description": "Worked on advanced quantum cryptography research at IIT Jodhpur, focusing on Quantum Key Distribution (QKD) systems. Developed Python-based simulation and analysis tools to implement and evaluate experimental protocols such as PPKT(P) and SPDC.\n\nDesigned programmable models to assist researchers in identifying optimal parameters for QKD experiments, improving accuracy and efficiency in validation. Contributed to security analysis through algorithmic evaluation and data-driven experimentation.\n\nBuilt cryptographic tools using Elliptic Curve Cryptography (ECC) for secure encryption and decryption of hash-based data. Implemented end-to-end encryption workflows with a strong emphasis on security, correctness, and practical usability."
     },
     {
-      "id": 2,
-      "role": "Full Stack Developer",
-      "company": "StartUp Inc",
-      "duration": "2023 - 2024",
-      "description": "Built MVP from scratch."
+      "id": 1775385604894,
+      "company": "NFSU Gandhinagar  ",
+      "role": "Trainee",
+      "duration": "july 2025",
+      "description": "Trained in IT and OT security at NFSU Gandhinagar, gaining hands-on experience in analyzing and simulating cyberattacks on critical infrastructure systems such as traffic control and power grids.\n\nWorked on capturing, monitoring, and analyzing network traffic to understand attack patterns and system vulnerabilities. Developed a strong understanding of IT–OT synchronization and the impact of cyber threats on interconnected systems.\n\nParticipated in team-based Capture The Flag (CTF) challenges, achieving second rank, demonstrating strong problem-solving and defensive security skills. Also gained practical exposure to malware analysis, incident response, and system recovery techniques."
     }
   ],
   "resumeUrl": "uploads/resume.pdf"
