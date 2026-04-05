@@ -276,6 +276,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <p class="text-sm text-[#B3B3B3]">Explore my technical skills & expertise</p>
                         </div>
                     </a>
+                    <!-- Blog Card -->
+                    <a href="blog.html" class="nav-card group/card relative flex-shrink-0 min-w-[280px] md:min-w-[350px] cursor-pointer rounded-lg overflow-hidden transition-transform hover:scale-105">
+                        <div class="relative h-[140px] md:h-[180px] bg-gradient-to-br from-[#6366f1] to-[#312e81]">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-16 h-16 md:w-20 md:h-20 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                </svg>
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 group-hover/card:bg-black/10 transition"></div>
+                        </div>
+                        <div class="bg-[#181818] p-4">
+                            <h3 class="text-lg font-bold text-white mb-1">Blog</h3>
+                            <p class="text-sm text-[#B3B3B3]">Read my thoughts, tutorials & insights</p>
+                        </div>
+                    </a>
                 </div>
             `;
             rowsContainer.appendChild(exploreRow);

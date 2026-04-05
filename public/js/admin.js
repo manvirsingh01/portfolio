@@ -145,6 +145,7 @@ async function loadData() {
         renderSkills();
         renderAbout();
         renderSocials();
+        renderBlogs();
         renderExperience();
         renderRows();
         renderProfiles();
@@ -1225,4 +1226,239 @@ window.deleteProfile = (id) => {
     
     saveData();
     toast('Profile deleted!', 'success');
+};
+
+// ===== BLOG SECTION =====
+function renderBlogs() {
+    const list = document.getElementById('blogs-list');
+    if (!list) return;
+    
+    const blogs = currentData.blogs || [];
+    
+    if (blogs.length === 0) {
+        list.innerHTML = '<p class="text-center text-[#808080] py-8">No blog posts yet</p>';
+        return;
+    }
+
+    // Sort by date (newest first)
+    const sortedBlogs = [...blogs].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+    list.innerHTML = sortedBlogs.map(blog => {
+        const date = new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const readTime = Math.ceil((blog.content || '').split(' ').length / 200) || 1;
+        
+        return `
+            <div class="bg-[#222] p-4 rounded hover:bg-[#2a2a2a] transition">
+                <div class="flex gap-3">
+                    ${blog.coverImage ? `<img src="${blog.coverImage}" alt="" class="w-20 h-16 object-cover rounded flex-shrink-0">` : `
+                        <div class="w-20 h-16 bg-[#333] rounded flex-shrink-0 flex items-center justify-center">
+                            <svg class="w-8 h-8 text-[#555]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                            </svg>
+                        </div>
+                    `}
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-start justify-between gap-2">
+                            <h4 class="font-bold text-sm truncate">${blog.title}</h4>
+                            <div class="flex gap-1 flex-shrink-0">
+                                <button onclick="editBlog(${blog.id})" class="text-[#B3B3B3] hover:text-white p-1" title="Edit">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                                    </svg>
+                                </button>
+                                <button onclick="deleteBlog(${blog.id})" class="text-red-500 hover:text-red-400 p-1" title="Delete">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-xs text-[#808080] mt-1">${date} · ${readTime} min read</p>
+                        <div class="flex flex-wrap gap-1 mt-2">
+                            ${blog.featured ? '<span class="text-xs bg-[#E50914] text-white px-2 py-0.5 rounded">Featured</span>' : ''}
+                            ${(blog.tags || []).slice(0, 2).map(tag => `<span class="text-xs bg-[#333] text-[#B3B3B3] px-2 py-0.5 rounded">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// Blog form submission
+document.getElementById('blog-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    if (!currentData.blogs) currentData.blogs = [];
+    
+    const blogId = document.getElementById('blog-id').value;
+    const title = document.getElementById('blog-title').value.trim();
+    const excerpt = document.getElementById('blog-excerpt').value.trim();
+    const coverImage = document.getElementById('blog-cover').value.trim();
+    const tagsInput = document.getElementById('blog-tags').value;
+    const tags = tagsInput ? tagsInput.split(',').map(t => t.trim()).filter(t => t) : [];
+    const featured = document.getElementById('blog-featured').checked;
+    const content = document.getElementById('blog-content').value;
+    
+    if (blogId) {
+        // Edit existing blog
+        const blog = currentData.blogs.find(b => b.id == blogId);
+        if (blog) {
+            blog.title = title;
+            blog.excerpt = excerpt;
+            blog.coverImage = coverImage;
+            blog.tags = tags;
+            blog.featured = featured;
+            blog.content = content;
+            blog.updatedAt = new Date().toISOString();
+            toast('Blog post updated!', 'success');
+        }
+    } else {
+        // Add new blog
+        currentData.blogs.push({
+            id: Date.now(),
+            title,
+            excerpt,
+            coverImage,
+            tags,
+            featured,
+            content,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        });
+        toast('Blog post published!', 'success');
+    }
+    
+    saveData();
+    resetBlogForm();
+});
+
+function resetBlogForm() {
+    document.getElementById('blog-form').reset();
+    document.getElementById('blog-id').value = '';
+    document.getElementById('blog-form-title').textContent = 'Add New Blog Post';
+    document.getElementById('blog-submit-text').textContent = 'Publish Post';
+    document.getElementById('blog-cancel-btn').classList.add('hidden');
+    document.getElementById('blog-cover-preview').classList.add('hidden');
+}
+
+window.editBlog = (id) => {
+    const blog = currentData.blogs.find(b => b.id == id);
+    if (!blog) return;
+    
+    document.getElementById('blog-id').value = blog.id;
+    document.getElementById('blog-title').value = blog.title || '';
+    document.getElementById('blog-excerpt').value = blog.excerpt || '';
+    document.getElementById('blog-cover').value = blog.coverImage || '';
+    document.getElementById('blog-tags').value = (blog.tags || []).join(', ');
+    document.getElementById('blog-featured').checked = blog.featured || false;
+    document.getElementById('blog-content').value = blog.content || '';
+    
+    document.getElementById('blog-form-title').textContent = 'Edit Blog Post';
+    document.getElementById('blog-submit-text').textContent = 'Update Post';
+    document.getElementById('blog-cancel-btn').classList.remove('hidden');
+    
+    if (blog.coverImage) {
+        const preview = document.getElementById('blog-cover-preview');
+        preview.classList.remove('hidden');
+        preview.querySelector('img').src = blog.coverImage;
+    }
+    
+    // Scroll to form
+    document.getElementById('blog-form').scrollIntoView({ behavior: 'smooth' });
+};
+
+window.cancelEditBlog = () => {
+    resetBlogForm();
+};
+
+window.deleteBlog = (id) => {
+    const blog = currentData.blogs.find(b => b.id == id);
+    if (!blog) return;
+    
+    if (!confirm(`Delete blog post "${blog.title}"?`)) return;
+    
+    currentData.blogs = currentData.blogs.filter(b => b.id !== id);
+    saveData();
+    toast('Blog post deleted!', 'success');
+};
+
+// Upload cover image for blog
+window.uploadBlogCover = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    toast('Uploading image...', 'info');
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const res = await fetch('https://api.imgbb.com/1/upload?key=666fb0955cdaa1276ec3e3a61a965011', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+            document.getElementById('blog-cover').value = data.data.url;
+            const preview = document.getElementById('blog-cover-preview');
+            preview.classList.remove('hidden');
+            preview.querySelector('img').src = data.data.url;
+            toast('Cover image uploaded!', 'success');
+        } else {
+            toast('Upload failed', 'error');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Upload error', 'error');
+    }
+};
+
+// Insert markdown syntax into blog content
+window.insertMarkdown = (before, after = '') => {
+    const textarea = document.getElementById('blog-content');
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = textarea.value.substring(start, end);
+    
+    const newText = textarea.value.substring(0, start) + before + selectedText + after + textarea.value.substring(end);
+    textarea.value = newText;
+    
+    // Position cursor
+    const cursorPos = start + before.length + selectedText.length + after.length;
+    textarea.focus();
+    textarea.setSelectionRange(cursorPos, cursorPos);
+};
+
+// Insert image into blog content
+window.insertBlogImage = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    toast('Uploading image...', 'info');
+    
+    const formData = new FormData();
+    formData.append('image', file);
+    
+    try {
+        const res = await fetch('https://api.imgbb.com/1/upload?key=666fb0955cdaa1276ec3e3a61a965011', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+            insertMarkdown(`![Image](${data.data.url})\n`);
+            toast('Image inserted!', 'success');
+        } else {
+            toast('Upload failed', 'error');
+        }
+    } catch (err) {
+        console.error(err);
+        toast('Upload error', 'error');
+    }
+    
+    // Reset file input
+    event.target.value = '';
 };

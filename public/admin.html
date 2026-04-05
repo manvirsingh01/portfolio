@@ -151,6 +151,8 @@
                 class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">About</button>
             <button onclick="switchTab('socials')" id="tab-socials"
                 class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Social Links</button>
+            <button onclick="switchTab('blogs')" id="tab-blogs"
+                class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Blog</button>
             <button onclick="switchTab('experience')" id="tab-experience"
                 class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Experience</button>
             <button onclick="switchTab('rows')" id="tab-rows"
@@ -663,6 +665,99 @@
                 <h2 class="text-xl font-bold mb-6">Your Social Links</h2>
                 <div id="socials-list" class="space-y-3 max-h-[500px] overflow-y-auto custom-scroll pr-2"></div>
             </section>
+        </div>
+
+        <!-- BLOGS TAB -->
+        <div id="view-blogs" class="tab-content hidden">
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Add/Edit Blog Form -->
+                <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
+                    <h2 id="blog-form-title" class="text-xl font-bold mb-6">Add New Blog Post</h2>
+                    <form id="blog-form" class="space-y-4">
+                        <input type="hidden" id="blog-id">
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Title *</label>
+                            <input type="text" id="blog-title"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Excerpt (short preview)</label>
+                            <input type="text" id="blog-excerpt"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                placeholder="A brief summary...">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Cover Image</label>
+                            <div class="flex gap-2">
+                                <input type="url" id="blog-cover"
+                                    class="flex-1 bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                    placeholder="https://...">
+                                <label class="bg-[#333] hover:bg-[#444] px-4 py-3 rounded cursor-pointer transition text-sm flex items-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                    <span>Upload</span>
+                                    <input type="file" accept="image/*" onchange="uploadBlogCover(event)" class="hidden">
+                                </label>
+                            </div>
+                            <div id="blog-cover-preview" class="mt-2 hidden">
+                                <img src="" alt="Cover preview" class="w-full h-32 object-cover rounded">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Tags (comma-separated)</label>
+                            <input type="text" id="blog-tags"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                placeholder="JavaScript, Tutorial, Web Dev">
+                        </div>
+                        <div class="flex gap-4">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="blog-featured" class="w-4 h-4 accent-[#E50914]">
+                                <span class="text-sm text-[#B3B3B3]">Featured post</span>
+                            </label>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Content *</label>
+                            <p class="text-xs text-[#808080] mb-2">Supports Markdown: # headings, **bold**, *italic*, `code`, ```code blocks```, > quotes, - lists, [links](url), ![images](url)</p>
+                            <div class="bg-[#333] rounded overflow-hidden">
+                                <div class="flex gap-1 p-2 border-b border-gray-700">
+                                    <button type="button" onclick="insertMarkdown('# ')" class="p-2 hover:bg-[#444] rounded text-sm" title="Heading">H</button>
+                                    <button type="button" onclick="insertMarkdown('**', '**')" class="p-2 hover:bg-[#444] rounded text-sm font-bold" title="Bold">B</button>
+                                    <button type="button" onclick="insertMarkdown('*', '*')" class="p-2 hover:bg-[#444] rounded text-sm italic" title="Italic">I</button>
+                                    <button type="button" onclick="insertMarkdown('`', '`')" class="p-2 hover:bg-[#444] rounded text-sm font-mono" title="Inline code">{}</button>
+                                    <button type="button" onclick="insertMarkdown('```js\n', '\n```')" class="p-2 hover:bg-[#444] rounded text-xs" title="Code block">Code</button>
+                                    <button type="button" onclick="insertMarkdown('> ')" class="p-2 hover:bg-[#444] rounded text-sm" title="Quote">&gt;</button>
+                                    <button type="button" onclick="insertMarkdown('- ')" class="p-2 hover:bg-[#444] rounded text-sm" title="List">•</button>
+                                    <button type="button" onclick="insertMarkdown('[', '](url)')" class="p-2 hover:bg-[#444] rounded text-sm" title="Link">🔗</button>
+                                    <label class="p-2 hover:bg-[#444] rounded text-sm cursor-pointer" title="Insert Image">
+                                        🖼️
+                                        <input type="file" accept="image/*" onchange="insertBlogImage(event)" class="hidden">
+                                    </label>
+                                </div>
+                                <textarea id="blog-content"
+                                    class="w-full bg-transparent p-3 text-white focus:outline-none min-h-[300px] font-mono text-sm"
+                                    required placeholder="Write your blog post here..."></textarea>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="submit"
+                                class="flex-1 bg-[#E50914] hover:bg-[#F40612] text-white font-bold py-3 rounded transition">
+                                <span id="blog-submit-text">Publish Post</span>
+                            </button>
+                            <button type="button" onclick="cancelEditBlog()" id="blog-cancel-btn"
+                                class="flex-1 bg-[#333] hover:bg-[#444] text-white font-bold py-3 rounded transition hidden">Cancel</button>
+                        </div>
+                    </form>
+                </section>
+                <!-- Blog List -->
+                <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
+                    <h2 class="text-xl font-bold mb-6">Your Blog Posts</h2>
+                    <div id="blogs-list" class="space-y-4 max-h-[600px] overflow-y-auto custom-scroll pr-2">
+                        <p class="text-center text-[#808080] py-8">No blog posts yet</p>
+                    </div>
+                </section>
+            </div>
         </div>
 
         <!-- EXPERIENCE TAB -->

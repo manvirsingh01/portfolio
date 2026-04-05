@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Manvir Singh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'netflix-red': '#E50914',
+                        'netflix-red-hover': '#F40612',
+                        'netflix-black': '#141414',
+                        'netflix-dark': '#181818',
+                        'netflix-gray': '#808080',
+                        'netflix-light-gray': '#B3B3B3',
+                    },
+                    fontFamily: {
+                        heading: ['Bebas Neue', 'Impact', 'sans-serif'],
+                        body: ['DM Sans', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Highlight.js for code syntax -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        :root {
+            --netflix-red: #E50914;
+            --netflix-black: #141414;
+            --netflix-dark: #181818;
+            --netflix-gray: #808080;
+            --netflix-light-gray: #B3B3B3;
+            --navbar-height: 68px;
+        }
+
+        body {
+            font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Loading spinner */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #141414;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.4s;
+        }
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-ring {
+            width: 56px;
+            height: 56px;
+            border: 3px solid #222;
+            border-top-color: var(--netflix-red);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Blog card */
+        .blog-card {
+            background: var(--netflix-dark);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Blog content styles */
+        .blog-content {
+            line-height: 1.8;
+        }
+        .blog-content h1, .blog-content h2, .blog-content h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 1px;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .blog-content h1 { font-size: 2.5rem; }
+        .blog-content h2 { font-size: 2rem; color: #E50914; }
+        .blog-content h3 { font-size: 1.5rem; }
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            color: #B3B3B3;
+        }
+        .blog-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+        .blog-content pre {
+            background: #0d0d0d;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        .blog-content code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            color: #B3B3B3;
+        }
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+        .blog-content blockquote {
+            border-left: 4px solid #E50914;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #808080;
+        }
+        .blog-content a {
+            color: #E50914;
+            text-decoration: underline;
+        }
+        .blog-content a:hover {
+            color: #F40612;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-fresh { background: #46d369; color: #000; }
+        .badge-featured { background: #E50914; color: #fff; }
+        .badge-tech { background: rgba(255,255,255,0.1); color: #B3B3B3; }
+    </style>
+    <script src="js/app.js" defer></script>
+</head>
+
+<body class="bg-[#141414] text-white antialiased overflow-x-hidden">
+
+    <!-- Loading Spinner -->
+    <div id="loader">
+        <div class="loader-ring"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="fixed top-0 w-full z-[1000] transition-all duration-300 h-[68px] px-4 md:px-[60px] flex items-center justify-between bg-[#141414]">
+        <div class="flex items-center gap-8">
+            <a href="index.html" class="text-[#E50914] text-[2.2rem] font-bold uppercase" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">
+                MANVIR
+            </a>
+            <ul class="hidden md:flex gap-5 text-[0.82rem] font-medium text-[#B3B3B3]">
+                <li><a href="browse.html" class="hover:text-white transition">Home</a></li>
+                <li><a href="skills.html" class="hover:text-white transition">Skills</a></li>
+                <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                <li><a href="#" class="text-white cursor-default">Blog</a></li>
+            </ul>
+        </div>
+        <div class="flex items-center gap-4">
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white p-2 hover:text-[#B3B3B3] transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <div class="group relative hidden md:block">
+                <div class="flex items-center gap-1 cursor-pointer">
+                    <div class="w-8 h-8 rounded overflow-hidden">
+                        <img id="nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    <svg class="w-4 h-4 text-white transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                <div class="absolute right-0 top-full mt-2 w-40 bg-[rgba(0,0,0,0.9)] border border-gray-700 hidden group-hover:block py-2 text-sm">
+                    <a href="index.html" class="block px-4 py-2 hover:bg-gray-800"
+                        onclick="localStorage.removeItem('activeProfile')">Sign out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[999] hidden flex-col items-center justify-center">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-white p-2">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <ul class="flex flex-col gap-8 text-center">
+            <li><a href="browse.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">Home</a></li>
+            <li><a href="skills.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">Skills</a></li>
+            <li><a href="about.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">About</a></li>
+            <li><a href="blog.html" class="text-2xl font-semibold text-white hover:text-[#E50914] transition">Blog</a></li>
+        </ul>
+        <div class="mt-12 flex items-center gap-3">
+            <div class="w-10 h-10 rounded overflow-hidden">
+                <img id="mobile-nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+            </div>
+            <a href="index.html" onclick="localStorage.removeItem('activeProfile')" class="text-[#B3B3B3] hover:text-white transition">Sign out</a>
+        </div>
+    </div>
+
+    <!-- Blog List View -->
+    <main id="blog-list-view" class="pt-24 pb-20 px-4 md:px-[60px] min-h-screen">
+        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-4 border-l-4 border-[#E50914] pl-6" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;">
+            BLOG
+        </h1>
+        <p class="text-[#B3B3B3] mb-12 pl-6">Thoughts, tutorials, and insights on development & technology</p>
+        
+        <!-- Fresh Blogs Row -->
+        <section id="fresh-blogs-section" class="mb-12 hidden">
+            <h2 class="text-xl font-bold mb-6 text-[#46d369]" style="font-family: 'Bebas Neue', sans-serif;">🔥 FRESH POSTS</h2>
+            <div id="fresh-blogs" class="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+                <!-- Fresh blogs injected here -->
+            </div>
+        </section>
+
+        <!-- All Blogs Grid -->
+        <section>
+            <h2 class="text-xl font-bold mb-6 text-[#808080]" style="font-family: 'Bebas Neue', sans-serif;">ALL POSTS</h2>
+            <div id="blogs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Blogs injected here -->
+            </div>
+            <div id="no-blogs" class="text-center py-20 text-[#808080] hidden">
+                <svg class="w-20 h-20 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                </svg>
+                <p class="text-xl">No blog posts yet</p>
+                <p class="text-sm mt-2">Check back soon for new content!</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Single Blog View -->
+    <article id="blog-detail-view" class="pt-24 pb-20 px-4 md:px-[60px] min-h-screen hidden">
+        <div class="max-w-4xl mx-auto">
+            <a href="blog.html" class="inline-flex items-center gap-2 text-[#B3B3B3] hover:text-white mb-8 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+                Back to all posts
+            </a>
+            
+            <!-- Blog Header -->
+            <header id="blog-header" class="mb-12">
+                <div id="blog-badges" class="flex flex-wrap gap-2 mb-4"></div>
+                <h1 id="blog-title" class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-4" style="font-family: 'Bebas Neue', sans-serif;"></h1>
+                <div class="flex items-center gap-4 text-[#808080] text-sm">
+                    <span id="blog-date"></span>
+                    <span>•</span>
+                    <span id="blog-read-time"></span>
+                </div>
+            </header>
+
+            <!-- Blog Cover Image -->
+            <div id="blog-cover-container" class="mb-12 hidden">
+                <img id="blog-cover" src="" alt="" class="w-full rounded-lg">
+            </div>
+
+            <!-- Blog Content -->
+            <div id="blog-content" class="blog-content"></div>
+
+            <!-- Blog Footer -->
+            <footer class="mt-16 pt-8 border-t border-gray-800">
+                <div class="flex items-center gap-4">
+                    <div class="w-16 h-16 rounded-full overflow-hidden bg-[#333]">
+                        <img id="blog-author-avatar" src="" alt="Author" class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <p class="font-semibold">Manvir Singh</p>
+                        <p class="text-sm text-[#808080]">Developer & Writer</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 md:px-[60px] text-center text-[#808080] text-sm border-t border-gray-800">
+        <p>&copy; 2026 Manvir Singh. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Blog-specific initialization
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loader = document.getElementById('loader');
+            
+            // Get blog ID from URL if present
+            const urlParams = new URLSearchParams(window.location.search);
+            const blogId = urlParams.get('id');
+
+            try {
+                const res = await fetch('/api/content');
+                const data = await res.json();
+
+                // Set avatar
+                const activeProfile = JSON.parse(localStorage.getItem('activeProfile'));
+                const navAvatar = document.getElementById('nav-avatar');
+                const mobileNavAvatar = document.getElementById('mobile-nav-avatar');
+                if (navAvatar && activeProfile) navAvatar.src = activeProfile.avatar;
+                if (mobileNavAvatar && activeProfile) mobileNavAvatar.src = activeProfile.avatar;
+
+                const blogs = data.blogs || [];
+
+                if (blogId) {
+                    // Show single blog
+                    showBlogDetail(blogs.find(b => b.id == blogId), data);
+                } else {
+                    // Show blog list
+                    renderBlogList(blogs);
+                }
+            } catch (e) {
+                console.error('Error loading blogs:', e);
+            }
+
+            setTimeout(() => loader.classList.add('hidden'), 300);
+        });
+
+        function renderBlogList(blogs) {
+            const grid = document.getElementById('blogs-grid');
+            const noBlogs = document.getElementById('no-blogs');
+            const freshSection = document.getElementById('fresh-blogs-section');
+            const freshContainer = document.getElementById('fresh-blogs');
+
+            if (blogs.length === 0) {
+                noBlogs.classList.remove('hidden');
+                return;
+            }
+
+            // Sort by date (newest first)
+            blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            // Fresh blogs (last 7 days)
+            const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+            const freshBlogs = blogs.filter(b => new Date(b.createdAt) > weekAgo);
+
+            if (freshBlogs.length > 0) {
+                freshSection.classList.remove('hidden');
+                freshContainer.innerHTML = freshBlogs.map(blog => createBlogCard(blog, true)).join('');
+            }
+
+            // All blogs
+            grid.innerHTML = blogs.map(blog => createBlogCard(blog, false)).join('');
+        }
+
+        function createBlogCard(blog, isHorizontal) {
+            const date = new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            const readTime = Math.ceil((blog.content || '').split(' ').length / 200) || 1;
+            const isFresh = Date.now() - new Date(blog.createdAt) < 7 * 24 * 60 * 60 * 1000;
+
+            if (isHorizontal) {
+                return `
+                    <a href="blog.html?id=${blog.id}" class="blog-card flex-shrink-0 w-[350px] md:w-[400px]">
+                        <div class="h-[180px] bg-gradient-to-br from-[#E50914] to-[#8B0000] overflow-hidden">
+                            ${blog.coverImage ? `<img src="${blog.coverImage}" alt="${blog.title}" class="w-full h-full object-cover">` : ''}
+                        </div>
+                        <div class="p-5">
+                            <div class="flex gap-2 mb-3">
+                                ${isFresh ? '<span class="badge badge-fresh">Fresh</span>' : ''}
+                                ${blog.featured ? '<span class="badge badge-featured">Featured</span>' : ''}
+                            </div>
+                            <h3 class="text-lg font-bold mb-2 line-clamp-2">${blog.title}</h3>
+                            <p class="text-sm text-[#808080]">${date} · ${readTime} min read</p>
+                        </div>
+                    </a>
+                `;
+            }
+
+            return `
+                <a href="blog.html?id=${blog.id}" class="blog-card">
+                    <div class="h-[200px] bg-gradient-to-br from-[#333] to-[#1a1a1a] overflow-hidden">
+                        ${blog.coverImage ? `<img src="${blog.coverImage}" alt="${blog.title}" class="w-full h-full object-cover">` : `
+                            <div class="w-full h-full flex items-center justify-center">
+                                <svg class="w-16 h-16 text-[#444]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                                </svg>
+                            </div>
+                        `}
+                    </div>
+                    <div class="p-5">
+                        <div class="flex gap-2 mb-3">
+                            ${isFresh ? '<span class="badge badge-fresh">Fresh</span>' : ''}
+                            ${blog.featured ? '<span class="badge badge-featured">Featured</span>' : ''}
+                            ${blog.tags && blog.tags[0] ? `<span class="badge badge-tech">${blog.tags[0]}</span>` : ''}
+                        </div>
+                        <h3 class="text-lg font-bold mb-2 line-clamp-2">${blog.title}</h3>
+                        <p class="text-sm text-[#B3B3B3] line-clamp-2 mb-3">${blog.excerpt || ''}</p>
+                        <p class="text-xs text-[#808080]">${date} · ${readTime} min read</p>
+                    </div>
+                </a>
+            `;
+        }
+
+        function showBlogDetail(blog, data) {
+            if (!blog) {
+                window.location.href = 'blog.html';
+                return;
+            }
+
+            document.getElementById('blog-list-view').classList.add('hidden');
+            document.getElementById('blog-detail-view').classList.remove('hidden');
+
+            // Set title
+            document.getElementById('blog-title').textContent = blog.title;
+            document.title = `${blog.title} | Manvir Singh`;
+
+            // Set date and read time
+            const date = new Date(blog.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const readTime = Math.ceil((blog.content || '').split(' ').length / 200) || 1;
+            document.getElementById('blog-date').textContent = date;
+            document.getElementById('blog-read-time').textContent = `${readTime} min read`;
+
+            // Set badges
+            const badgesContainer = document.getElementById('blog-badges');
+            let badgesHtml = '';
+            if (blog.featured) badgesHtml += '<span class="badge badge-featured">Featured</span>';
+            if (blog.tags) {
+                blog.tags.forEach(tag => {
+                    badgesHtml += `<span class="badge badge-tech">${tag}</span>`;
+                });
+            }
+            badgesContainer.innerHTML = badgesHtml;
+
+            // Set cover image
+            if (blog.coverImage) {
+                document.getElementById('blog-cover-container').classList.remove('hidden');
+                document.getElementById('blog-cover').src = blog.coverImage;
+            }
+
+            // Set content (parse markdown-like syntax)
+            const content = parseContent(blog.content || '');
+            document.getElementById('blog-content').innerHTML = content;
+
+            // Set author avatar
+            if (data.about && data.about.profilePicture) {
+                document.getElementById('blog-author-avatar').src = data.about.profilePicture;
+            }
+
+            // Highlight code blocks
+            document.querySelectorAll('pre code').forEach((block) => {
+                hljs.highlightElement(block);
+            });
+        }
+
+        function parseContent(content) {
+            // Simple markdown-like parser
+            let html = content
+                // Code blocks
+                .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code class="language-$1">$2</code></pre>')
+                // Inline code
+                .replace(/`([^`]+)`/g, '<code class="bg-[#333] px-1 rounded">$1</code>')
+                // Headers
+                .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+                .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+                .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+                // Bold
+                .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white">$1</strong>')
+                // Italic
+                .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+                // Links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+                // Images
+                .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+                // Blockquotes
+                .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+                // Unordered lists
+                .replace(/^- (.+)$/gm, '<li>$1</li>')
+                // Paragraphs
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+
+            // Wrap in paragraph if not already
+            if (!html.startsWith('<')) {
+                html = '<p>' + html + '</p>';
+            }
+
+            // Fix list items
+            html = html.replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>');
+            html = html.replace(/<\/ul>\s*<ul>/g, '');
+
+            return html;
+        }
+    </script>
+
+</body>
+
+</html>
