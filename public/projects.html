@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Manvir Singh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'netflix-red': '#E50914',
+                        'netflix-red-hover': '#F40612',
+                        'netflix-black': '#141414',
+                        'netflix-dark': '#181818',
+                        'netflix-gray': '#808080',
+                        'netflix-light-gray': '#B3B3B3',
+                    },
+                    fontFamily: {
+                        heading: ['Bebas Neue', 'Impact', 'sans-serif'],
+                        body: ['DM Sans', 'Helvetica Neue', 'Arial', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --netflix-red: #E50914;
+            --netflix-black: #141414;
+            --netflix-dark: #181818;
+            --netflix-gray: #808080;
+            --netflix-light-gray: #B3B3B3;
+            --navbar-height: 68px;
+        }
+
+        body {
+            font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Loading spinner */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #141414;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.4s;
+        }
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-ring {
+            width: 56px;
+            height: 56px;
+            border: 3px solid #222;
+            border-top-color: var(--netflix-red);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Project card */
+        .project-card {
+            background: var(--netflix-dark);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-featured { background: #E50914; color: #fff; }
+        .badge-green { background: #46d369; color: #000; }
+        .badge-yellow { background: #f5c518; color: #000; }
+        .badge-red { background: #E50914; color: #fff; }
+        .badge-tech { background: rgba(255,255,255,0.1); color: #B3B3B3; }
+
+        /* Filter pills */
+        .filter-pill {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: #333;
+            color: #B3B3B3;
+            transition: all 0.2s;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .filter-pill:hover {
+            background: #444;
+            color: #fff;
+        }
+        .filter-pill.active {
+            background: #E50914;
+            color: #fff;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: #181818;
+            border-radius: 8px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body class="bg-[#141414] text-white antialiased overflow-x-hidden">
+
+    <!-- Loading Spinner -->
+    <div id="loader">
+        <div class="loader-ring"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="fixed top-0 w-full z-[1000] transition-all duration-300 h-[68px] px-4 md:px-[60px] flex items-center justify-between bg-[#141414]">
+        <div class="flex items-center gap-8">
+            <a href="index.html" class="text-[#E50914] text-[2.2rem] font-bold uppercase" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">
+                MANVIR
+            </a>
+            <ul class="hidden md:flex gap-5 text-[0.82rem] font-medium text-[#B3B3B3]">
+                <li><a href="browse.html" class="hover:text-white transition">Home</a></li>
+                <li><a href="#" class="text-white cursor-default">Projects</a></li>
+                <li><a href="skills.html" class="hover:text-white transition">Skills</a></li>
+                <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                <li><a href="blog.html" class="hover:text-white transition">Blog</a></li>
+            </ul>
+        </div>
+        <div class="flex items-center gap-4">
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white p-2 hover:text-[#B3B3B3] transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <div class="group relative hidden md:block">
+                <div class="flex items-center gap-1 cursor-pointer">
+                    <div class="w-8 h-8 rounded overflow-hidden">
+                        <img id="nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    <svg class="w-4 h-4 text-white transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                <div class="absolute right-0 top-full mt-2 w-40 bg-[rgba(0,0,0,0.9)] border border-gray-700 hidden group-hover:block py-2 text-sm">
+                    <a href="index.html" class="block px-4 py-2 hover:bg-gray-800"
+                        onclick="localStorage.removeItem('activeProfile')">Sign out</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[999] hidden flex-col items-center justify-center">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-white p-2">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <ul class="flex flex-col gap-8 text-center">
+            <li><a href="browse.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">Home</a></li>
+            <li><a href="projects.html" class="text-2xl font-semibold text-white hover:text-[#E50914] transition">Projects</a></li>
+            <li><a href="skills.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">Skills</a></li>
+            <li><a href="about.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">About</a></li>
+            <li><a href="blog.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">Blog</a></li>
+        </ul>
+        <div class="mt-12 flex items-center gap-3">
+            <div class="w-10 h-10 rounded overflow-hidden">
+                <img id="mobile-nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+            </div>
+            <a href="index.html" onclick="localStorage.removeItem('activeProfile')" class="text-[#B3B3B3] hover:text-white transition">Sign out</a>
+        </div>
+    </div>
+
+    <!-- Projects Page -->
+    <main class="pt-24 pb-20 px-4 md:px-[60px] min-h-screen">
+        <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold mb-4 border-l-4 border-[#E50914] pl-6" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;">
+            PROJECTS
+        </h1>
+        <p class="text-[#B3B3B3] mb-8 pl-6">Explore my work and creative projects</p>
+
+        <!-- Search & Filters -->
+        <div class="mb-8">
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <!-- Search -->
+                <div class="relative flex-1 max-w-md">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#808080]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="search-input" placeholder="Search projects..." 
+                        class="w-full bg-[#333] border-none rounded-full py-3 pl-12 pr-4 text-white placeholder-[#808080] focus:outline-none focus:ring-2 focus:ring-[#E50914]">
+                </div>
+            </div>
+            <!-- Category Filters -->
+            <div class="flex gap-2 overflow-x-auto pb-2 no-scrollbar" id="category-filters">
+                <button class="filter-pill active" data-category="all">All</button>
+            </div>
+        </div>
+
+        <!-- Featured Projects -->
+        <section id="featured-section" class="mb-12 hidden">
+            <h2 class="text-xl font-bold mb-6 text-[#E50914]" style="font-family: 'Bebas Neue', sans-serif;">⭐ FEATURED PROJECTS</h2>
+            <div id="featured-projects" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            </div>
+        </section>
+
+        <!-- All Projects Grid -->
+        <section>
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold text-[#808080]" style="font-family: 'Bebas Neue', sans-serif;">ALL PROJECTS</h2>
+                <span id="project-count" class="text-sm text-[#808080]"></span>
+            </div>
+            <div id="projects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            </div>
+            <div id="no-projects" class="text-center py-20 text-[#808080] hidden">
+                <svg class="w-20 h-20 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="text-xl">No projects found</p>
+                <p class="text-sm mt-2">Try adjusting your search or filters</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Project Detail Modal -->
+    <div id="project-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div id="modal-hero" class="relative h-[300px] md:h-[400px] bg-gradient-to-t from-[#181818] to-transparent">
+                <img id="modal-image" src="" alt="" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent"></div>
+                <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-[#181818] rounded-full flex items-center justify-center hover:bg-[#333] transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <div class="absolute bottom-0 left-0 right-0 p-6">
+                    <h2 id="modal-title" class="text-3xl md:text-4xl font-bold mb-2" style="font-family: 'Bebas Neue', sans-serif;"></h2>
+                    <div id="modal-badges" class="flex flex-wrap gap-2 mb-4"></div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <a id="modal-demo-btn" href="#" target="_blank" class="bg-white text-black font-bold py-3 px-6 rounded flex items-center gap-2 hover:bg-gray-200 transition hidden">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        Live Demo
+                    </a>
+                    <a id="modal-github-btn" href="#" target="_blank" class="bg-[#333] text-white font-bold py-3 px-6 rounded flex items-center gap-2 hover:bg-[#444] transition hidden">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+                <p id="modal-description" class="text-[#B3B3B3] mb-6 leading-relaxed"></p>
+                <div id="modal-tech" class="mb-6">
+                    <h3 class="text-sm font-semibold text-[#808080] mb-3">TECHNOLOGIES</h3>
+                    <div id="modal-tech-list" class="flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 md:px-[60px] text-center text-[#808080] text-sm border-t border-gray-800">
+        <p>&copy; 2026 Manvir Singh. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        let allProjects = [];
+        let filteredProjects = [];
+        let categories = new Set(['all']);
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loader = document.getElementById('loader');
+
+            try {
+                const res = await fetch('/api/content');
+                const data = await res.json();
+
+                // Set avatar
+                const activeProfile = JSON.parse(localStorage.getItem('activeProfile'));
+                const navAvatar = document.getElementById('nav-avatar');
+                const mobileNavAvatar = document.getElementById('mobile-nav-avatar');
+                if (navAvatar && activeProfile) navAvatar.src = activeProfile.avatar;
+                if (mobileNavAvatar && activeProfile) mobileNavAvatar.src = activeProfile.avatar;
+
+                // Collect all projects from rows
+                allProjects = [];
+                if (data.rows) {
+                    data.rows.forEach(row => {
+                        if (row.items) {
+                            row.items.forEach(item => {
+                                // Add category from row title
+                                item.category = row.title;
+                                categories.add(row.title);
+                                allProjects.push(item);
+                            });
+                        }
+                    });
+                }
+
+                // Remove duplicates by id
+                const seen = new Set();
+                allProjects = allProjects.filter(p => {
+                    if (seen.has(p.id)) return false;
+                    seen.add(p.id);
+                    return true;
+                });
+
+                // Render category filters
+                renderCategoryFilters();
+
+                // Initial render
+                filteredProjects = [...allProjects];
+                renderProjects();
+
+            } catch (e) {
+                console.error('Error loading projects:', e);
+            }
+
+            setTimeout(() => loader.classList.add('hidden'), 300);
+
+            // Mobile menu
+            initMobileMenu();
+        });
+
+        function renderCategoryFilters() {
+            const container = document.getElementById('category-filters');
+            container.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `filter-pill ${cat === 'all' ? 'active' : ''}`;
+                btn.dataset.category = cat;
+                btn.textContent = cat === 'all' ? 'All' : cat;
+                btn.onclick = () => filterByCategory(cat);
+                container.appendChild(btn);
+            });
+        }
+
+        function filterByCategory(category) {
+            // Update active state
+            document.querySelectorAll('.filter-pill').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.category === category);
+            });
+
+            // Filter projects
+            if (category === 'all') {
+                filteredProjects = [...allProjects];
+            } else {
+                filteredProjects = allProjects.filter(p => p.category === category);
+            }
+
+            // Apply search filter too
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            if (searchTerm) {
+                filteredProjects = filteredProjects.filter(p => 
+                    p.title.toLowerCase().includes(searchTerm) ||
+                    (p.description && p.description.toLowerCase().includes(searchTerm)) ||
+                    (p.technologies && p.technologies.some(t => t.toLowerCase().includes(searchTerm)))
+                );
+            }
+
+            renderProjects();
+        }
+
+        // Search functionality
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const activeCategory = document.querySelector('.filter-pill.active').dataset.category;
+            filterByCategory(activeCategory);
+        });
+
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            const noProjects = document.getElementById('no-projects');
+            const featuredSection = document.getElementById('featured-section');
+            const featuredContainer = document.getElementById('featured-projects');
+            const countEl = document.getElementById('project-count');
+
+            countEl.textContent = `${filteredProjects.length} project${filteredProjects.length !== 1 ? 's' : ''}`;
+
+            if (filteredProjects.length === 0) {
+                grid.innerHTML = '';
+                noProjects.classList.remove('hidden');
+                featuredSection.classList.add('hidden');
+                return;
+            }
+
+            noProjects.classList.add('hidden');
+
+            // Featured projects (if no search/filter active)
+            const searchTerm = document.getElementById('search-input').value;
+            const activeCategory = document.querySelector('.filter-pill.active').dataset.category;
+            const featured = filteredProjects.filter(p => p.featured);
+            
+            if (featured.length > 0 && !searchTerm && activeCategory === 'all') {
+                featuredSection.classList.remove('hidden');
+                featuredContainer.innerHTML = featured.slice(0, 2).map(p => createFeaturedCard(p)).join('');
+            } else {
+                featuredSection.classList.add('hidden');
+            }
+
+            // All projects grid
+            grid.innerHTML = filteredProjects.map(p => createProjectCard(p)).join('');
+        }
+
+        function createFeaturedCard(project) {
+            const techHtml = (project.technologies || []).slice(0, 4).map(t => 
+                `<span class="text-xs bg-[#333] px-2 py-1 rounded">${t}</span>`
+            ).join('');
+
+            return `
+                <div class="project-card cursor-pointer group" onclick="openModal(${project.id})">
+                    <div class="relative h-[250px] overflow-hidden">
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#181818] via-transparent to-transparent"></div>
+                        ${project.github ? `<span class="absolute top-3 right-3 bg-black/70 rounded-full p-2"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></span>` : ''}
+                    </div>
+                    <div class="p-5">
+                        <div class="flex gap-2 mb-3">
+                            <span class="badge badge-featured">Featured</span>
+                            ${project.category ? `<span class="badge badge-tech">${project.category}</span>` : ''}
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">${project.title}</h3>
+                        <p class="text-sm text-[#B3B3B3] line-clamp-2 mb-4">${project.shortDesc || project.description || ''}</p>
+                        <div class="flex flex-wrap gap-2">${techHtml}</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function createProjectCard(project) {
+            let badgesHtml = '';
+            if (project.featured) badgesHtml += '<span class="badge badge-featured">Featured</span>';
+            if (project.difficulty) {
+                const diffClass = project.difficulty === 'Hard' ? 'badge-red' : project.difficulty === 'Medium' ? 'badge-yellow' : 'badge-green';
+                badgesHtml += `<span class="badge ${diffClass}">${project.difficulty}</span>`;
+            }
+            if (project.year) badgesHtml += `<span class="badge badge-tech">${project.year}</span>`;
+
+            const techHtml = (project.technologies || []).slice(0, 3).map(t => 
+                `<span class="text-xs bg-[#333] px-2 py-0.5 rounded">${t}</span>`
+            ).join('');
+
+            return `
+                <div class="project-card cursor-pointer" onclick="openModal(${project.id})">
+                    <div class="relative h-[180px] overflow-hidden">
+                        <img src="${project.image}" alt="${project.title}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        ${project.github ? `<span class="absolute top-2 right-2 bg-black/70 rounded-full p-1.5"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></span>` : ''}
+                    </div>
+                    <div class="p-4">
+                        ${badgesHtml ? `<div class="flex flex-wrap gap-1 mb-2">${badgesHtml}</div>` : ''}
+                        <h3 class="font-bold mb-1 truncate">${project.title}</h3>
+                        <p class="text-xs text-[#B3B3B3] line-clamp-2 mb-3">${project.shortDesc || ''}</p>
+                        ${techHtml ? `<div class="flex flex-wrap gap-1">${techHtml}</div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function openModal(projectId) {
+            const project = allProjects.find(p => p.id === projectId);
+            if (!project) return;
+
+            document.getElementById('modal-image').src = project.image;
+            document.getElementById('modal-title').textContent = project.title;
+            document.getElementById('modal-description').textContent = project.description || project.shortDesc || '';
+
+            // Badges
+            let badgesHtml = '';
+            if (project.featured) badgesHtml += '<span class="badge badge-featured">Featured</span>';
+            if (project.difficulty) {
+                const diffClass = project.difficulty === 'Hard' ? 'badge-red' : project.difficulty === 'Medium' ? 'badge-yellow' : 'badge-green';
+                badgesHtml += `<span class="badge ${diffClass}">${project.difficulty}</span>`;
+            }
+            if (project.year) badgesHtml += `<span class="badge badge-tech">${project.year}</span>`;
+            if (project.category) badgesHtml += `<span class="badge badge-tech">${project.category}</span>`;
+            document.getElementById('modal-badges').innerHTML = badgesHtml;
+
+            // Buttons
+            const demoBtn = document.getElementById('modal-demo-btn');
+            const githubBtn = document.getElementById('modal-github-btn');
+            
+            if (project.demo) {
+                demoBtn.href = project.demo;
+                demoBtn.classList.remove('hidden');
+            } else {
+                demoBtn.classList.add('hidden');
+            }
+
+            if (project.github) {
+                githubBtn.href = project.github;
+                githubBtn.classList.remove('hidden');
+            } else {
+                githubBtn.classList.add('hidden');
+            }
+
+            // Technologies
+            const techList = document.getElementById('modal-tech-list');
+            if (project.technologies && project.technologies.length > 0) {
+                techList.innerHTML = project.technologies.map(t => 
+                    `<span class="bg-[#333] px-3 py-1.5 rounded text-sm">${t}</span>`
+                ).join('');
+                document.getElementById('modal-tech').classList.remove('hidden');
+            } else {
+                document.getElementById('modal-tech').classList.add('hidden');
+            }
+
+            document.getElementById('project-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        window.closeModal = () => {
+            document.getElementById('project-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        };
+
+        // Close modal on overlay click
+        document.getElementById('project-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'project-modal') closeModal();
+        });
+
+        // Close modal on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Mobile menu
+        function initMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const closeBtn = document.getElementById('mobile-menu-close');
+
+            if (btn && menu) {
+                btn.addEventListener('click', () => {
+                    menu.classList.remove('hidden');
+                    menu.classList.add('flex');
+                });
+            }
+
+            if (closeBtn && menu) {
+                closeBtn.addEventListener('click', () => {
+                    menu.classList.add('hidden');
+                    menu.classList.remove('flex');
+                });
+            }
+        }
+    </script>
+
+</body>
+
+</html>

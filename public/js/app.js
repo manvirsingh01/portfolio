@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 rowSection.innerHTML = `
                     <div class="flex items-baseline gap-4 mb-3">
                         <h2 class="row-title text-[1.05rem] font-semibold text-[#808080]">${row.title}</h2>
-                        <span class="text-xs text-[#808080] opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-white">Explore All ›</span>
+                        <a href="projects.html" class="text-xs text-[#808080] opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:text-white">Explore All ›</a>
                     </div>
                     <div class="row-track flex gap-1 overflow-x-auto pb-[80px] -mb-[60px] no-scrollbar scroll-smooth">
                         ${cardsHtml}
@@ -339,6 +339,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="bg-[#181818] p-4">
                             <h3 class="text-lg font-bold text-white mb-1">My Skills</h3>
                             <p class="text-sm text-[#B3B3B3]">Explore my technical skills & expertise</p>
+                        </div>
+                    </a>
+                    <!-- Projects Card -->
+                    <a href="projects.html" class="nav-card group/card relative flex-shrink-0 min-w-[280px] md:min-w-[350px] cursor-pointer rounded-lg overflow-hidden transition-transform hover:scale-105">
+                        <div class="relative h-[140px] md:h-[180px] bg-gradient-to-br from-[#f59e0b] to-[#b45309]">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-16 h-16 md:w-20 md:h-20 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                                </svg>
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 group-hover/card:bg-black/10 transition"></div>
+                        </div>
+                        <div class="bg-[#181818] p-4">
+                            <h3 class="text-lg font-bold text-white mb-1">Projects</h3>
+                            <p class="text-sm text-[#B3B3B3]">Browse all my work & creative projects</p>
                         </div>
                     </a>
                     <!-- Blog Card -->
