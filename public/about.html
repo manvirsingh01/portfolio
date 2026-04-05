@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | Portfolio</title>
+    <title>About | Manvir Singh</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,83 +12,225 @@
                 extend: {
                     colors: {
                         'netflix-red': '#E50914',
+                        'netflix-red-hover': '#F40612',
                         'netflix-black': '#141414',
-                        'netflix-dark-gray': '#181818',
-                        'netflix-light-gray': '#2F2F2F',
+                        'netflix-dark': '#181818',
+                        'netflix-gray': '#808080',
+                        'netflix-light-gray': '#B3B3B3',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Bebas Neue', 'Impact', 'sans-serif'],
+                        body: ['DM Sans', 'Helvetica Neue', 'Arial', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --netflix-red: #E50914;
+            --netflix-black: #141414;
+            --netflix-dark: #181818;
+            --netflix-gray: #808080;
+            --netflix-light-gray: #B3B3B3;
+            --navbar-height: 68px;
+        }
+
+        body {
+            font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Loading spinner */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #141414;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.4s;
+        }
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-ring {
+            width: 56px;
+            height: 56px;
+            border: 3px solid #222;
+            border-top-color: var(--netflix-red);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Episode card style */
+        .episode-item {
+            background: var(--netflix-dark);
+            border-radius: 6px;
+            padding: 20px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        .episode-item:hover {
+            background: #222;
+        }
+        .episode-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            color: var(--netflix-gray);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .episode-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .episode-desc {
+            font-size: 0.9rem;
+            color: var(--netflix-light-gray);
+            margin-top: 6px;
+        }
+
+        /* Social button */
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--netflix-dark);
+            border-radius: 4px;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .social-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        /* Resume button */
+        .resume-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .resume-btn.primary {
+            background: #fff;
+            color: #000;
+        }
+        .resume-btn.primary:hover {
+            background: #e5e5e5;
+        }
+        .resume-btn.secondary {
+            background: rgba(109,109,110,0.7);
+            color: #fff;
+        }
+        .resume-btn.secondary:hover {
+            background: rgba(109,109,110,0.5);
+        }
+    </style>
     <script src="js/app.js" defer></script>
 </head>
 
-<body class="bg-[#141414] text-white font-sans antialiased overflow-x-hidden">
+<body class="bg-[#141414] text-white antialiased overflow-x-hidden">
+
+    <!-- Loading Spinner -->
+    <div id="loader">
+        <div class="loader-ring"></div>
+    </div>
 
     <!-- Navbar -->
     <nav id="navbar"
-        class="fixed top-0 w-full z-50 transition-colors duration-300 bg-black p-4 md:px-12 flex items-center justify-between">
+        class="fixed top-0 w-full z-[1000] transition-all duration-300 h-[68px] px-4 md:px-[60px] flex items-center justify-between bg-[#141414]">
         <div class="flex items-center gap-8">
-            <a href="index.html" class="text-red-600 text-3xl md:text-4xl font-bold uppercase tracking-tighter">Manvir
-                Singh</a>
-            <ul class="hidden md:flex gap-5 text-sm font-medium text-gray-300">
+            <a href="index.html" class="text-[#E50914] text-[2.2rem] font-bold uppercase" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">
+                MANVIR
+            </a>
+            <ul class="hidden md:flex gap-5 text-[0.82rem] font-medium text-[#B3B3B3]">
                 <li><a href="browse.html" class="hover:text-white transition">Home</a></li>
                 <li><a href="skills.html" class="hover:text-white transition">Skills</a></li>
-                <li><a href="#" class="text-white font-bold cursor-default">About</a></li>
+                <li><a href="#" class="text-white cursor-default">About</a></li>
             </ul>
         </div>
         <div class="flex items-center gap-4">
             <div class="group relative">
-                <div class="w-8 h-8 rounded bg-gray-700 overflow-hidden cursor-pointer">
-                    <img id="nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+                <div class="flex items-center gap-1 cursor-pointer">
+                    <div class="w-8 h-8 rounded overflow-hidden">
+                        <img id="nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    <svg class="w-4 h-4 text-white transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
                 </div>
-                <div
-                    class="absolute right-0 top-full w-32 bg-black/90 border border-gray-700 hidden group-hover:block p-2 text-sm text-gray-300">
-                    <a href="index.html" class="block hover:underline"
+                <div class="absolute right-0 top-full mt-2 w-40 bg-[rgba(0,0,0,0.9)] border border-gray-700 hidden group-hover:block py-2 text-sm">
+                    <a href="index.html" class="block px-4 py-2 hover:bg-gray-800"
                         onclick="localStorage.removeItem('activeProfile')">Sign out</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- About Section -->
-    <main class="pt-24 pb-20 px-4 md:px-12 min-h-screen">
-
-        <!-- Intro & Socials -->
-        <section class="max-w-4xl mx-auto text-center mb-20 animate-fade-in">
-            <!-- Profile Picture -->
-            <div id="profile-picture-container" class="mb-8">
-                <div
-                    class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full overflow-hidden bg-gray-700 ring-4 ring-red-600">
-                    <img id="about-profile-pic" src="" alt="Profile Picture" class="w-full h-full object-cover hidden">
-                    <div id="about-no-profile" class="w-full h-full flex items-center justify-center text-gray-500">
-                        <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                                clip-rule="evenodd"></path>
-                        </svg>
+    <!-- Hero Section with Profile Picture -->
+    <header class="relative pt-[68px]">
+        <div class="w-full h-[40vh] md:h-[50vh] bg-gradient-to-b from-[#333] to-[#141414] flex items-center justify-center">
+            <div class="text-center">
+                <!-- Profile Picture -->
+                <div id="profile-picture-container" class="mb-6">
+                    <div class="w-36 h-36 md:w-48 md:h-48 mx-auto rounded-full overflow-hidden ring-4 ring-[#E50914] shadow-2xl">
+                        <img id="about-profile-pic" src="" alt="Profile Picture" class="w-full h-full object-cover hidden">
+                        <div id="about-no-profile" class="w-full h-full flex items-center justify-center bg-[#333] text-[#808080]">
+                            <svg class="w-20 h-20" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
                     </div>
                 </div>
+                <h1 class="text-[clamp(2.5rem,6vw,5rem)] font-bold tracking-tight" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">
+                    MANVIR SINGH
+                </h1>
+                <p class="text-[#B3B3B3] text-lg mt-2">Developer · Creator · Builder</p>
             </div>
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">About Me</h1>
-            <p id="about-intro" class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto"></p>
+        </div>
+    </header>
 
-            <div id="resume-container" class="flex justify-center gap-4 mb-8 hidden">
+    <!-- About Section -->
+    <main class="pb-20 px-4 md:px-[60px]">
+
+        <!-- Actions & Socials -->
+        <section class="max-w-4xl mx-auto text-center -mt-8 mb-16">
+            <!-- Resume Buttons -->
+            <div id="resume-container" class="flex justify-center gap-4 mb-8 hidden flex-wrap">
                 <!-- Resume Buttons Injected by JS -->
             </div>
 
-            <div id="social-links" class="flex justify-center gap-6">
+            <!-- Social Links -->
+            <div id="social-links" class="flex justify-center gap-4 flex-wrap">
                 <!-- Socials Injected -->
             </div>
         </section>
 
-        <!-- Timeline -->
+        <!-- Intro -->
+        <section class="max-w-3xl mx-auto mb-20">
+            <h2 class="text-2xl font-bold mb-6 text-center" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;">ABOUT ME</h2>
+            <p id="about-intro" class="text-lg text-[#B3B3B3] leading-relaxed text-center"></p>
+        </section>
+
+        <!-- Timeline (Episode Style) -->
         <section class="max-w-3xl mx-auto">
-            <h2 class="text-2xl font-bold mb-8 text-center text-gray-400 uppercase tracking-widest">My Journey</h2>
-            <div id="timeline-container" class="relative border-l-2 border-gray-700 ml-4 md:ml-0 space-y-12">
+            <h2 class="text-2xl font-bold mb-8 text-center uppercase tracking-widest text-[#808080]" style="font-family: 'Bebas Neue', sans-serif;">
+                MY JOURNEY
+            </h2>
+            <div id="timeline-container" class="space-y-4">
                 <!-- Timeline Items Injected -->
             </div>
         </section>

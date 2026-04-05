@@ -17,42 +17,196 @@
     }
   ],
   "hero": {
-    "title": "Portfolio 2.0",
-    "description": "Welcome to the future of my work. Explore my journey through the years.",
+    "title": "Manvir Singh",
+    "description": "Full-stack developer crafting modern web experiences. Explore my journey through innovative projects and creative solutions.",
     "imageUrl": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
     "link": "#",
     "githubUrl": "https://github.com/manvirsingh"
   },
   "rows": [
     {
-      "title": "2023 Projects",
+      "title": "Top 10 Projects",
       "profileIds": [
-        1
+        1,
+        2,
+        3
       ],
-      "items": []
+      "style": "top10",
+      "items": [
+        {
+          "id": 101,
+          "title": "Netflix Clone Portfolio",
+          "image": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=600",
+          "bannerImage": "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=1200",
+          "shortDesc": "A pixel-perfect Netflix UI recreation with dynamic content",
+          "description": "Complete Netflix clone with profile selection, card animations, search functionality, and admin dashboard.",
+          "year": 2024,
+          "difficulty": "Advanced",
+          "status": "Live",
+          "buildTime": "3 weeks",
+          "githubUrl": "https://github.com/manvirsingh/portfolio",
+          "liveUrl": "#",
+          "technologies": [
+            "Node.js",
+            "Express",
+            "Tailwind CSS",
+            "JavaScript"
+          ],
+          "useCases": [
+            "Portfolio showcase",
+            "Netflix UI study",
+            "Frontend practice"
+          ],
+          "futureScope": "Add user authentication and watch history"
+        },
+        {
+          "id": 102,
+          "title": "AI Chat Assistant",
+          "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600",
+          "shortDesc": "Real-time AI-powered chat interface with memory",
+          "description": "A conversational AI assistant with context awareness and memory persistence.",
+          "year": 2024,
+          "difficulty": "Advanced",
+          "status": "Live",
+          "buildTime": "2 weeks",
+          "githubUrl": "#",
+          "technologies": [
+            "Python",
+            "OpenAI",
+            "React",
+            "Redis"
+          ]
+        },
+        {
+          "id": 103,
+          "title": "Task Manager Pro",
+          "image": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600",
+          "shortDesc": "Kanban-style task management with drag & drop",
+          "description": "Full-featured task manager with team collaboration and real-time sync.",
+          "year": 2024,
+          "difficulty": "Intermediate",
+          "status": "Live",
+          "buildTime": "1 month",
+          "githubUrl": "#",
+          "technologies": [
+            "React",
+            "Node.js",
+            "Socket.io",
+            "MongoDB"
+          ]
+        }
+      ]
     },
     {
       "title": "2024 Projects",
       "profileIds": [
         2
       ],
-      "items": []
+      "style": "standard",
+      "items": [
+        {
+          "id": 201,
+          "title": "E-Commerce Dashboard",
+          "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600",
+          "shortDesc": "Analytics dashboard for online stores",
+          "description": "Real-time sales analytics and inventory management dashboard.",
+          "year": 2024,
+          "difficulty": "Intermediate",
+          "status": "Live",
+          "buildTime": "3 weeks",
+          "githubUrl": "#",
+          "technologies": [
+            "React",
+            "D3.js",
+            "PostgreSQL"
+          ]
+        },
+        {
+          "id": 202,
+          "title": "Weather App",
+          "image": "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=600",
+          "shortDesc": "Beautiful weather forecasts with animations",
+          "description": "Location-based weather app with 7-day forecasts and animated backgrounds.",
+          "year": 2024,
+          "difficulty": "Beginner",
+          "status": "Live",
+          "buildTime": "1 week",
+          "githubUrl": "#",
+          "technologies": [
+            "JavaScript",
+            "OpenWeather API",
+            "CSS"
+          ]
+        }
+      ]
     },
     {
       "title": "2025 Innovations",
       "profileIds": [
         3
       ],
-      "items": []
+      "style": "featured",
+      "items": [
+        {
+          "id": 301,
+          "title": "Neural Network Visualizer",
+          "image": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600",
+          "shortDesc": "Interactive 3D visualization of neural networks",
+          "description": "Educational tool to visualize how neural networks learn and process data.",
+          "year": 2025,
+          "difficulty": "Advanced",
+          "status": "In Dev",
+          "buildTime": "Ongoing",
+          "githubUrl": "#",
+          "technologies": [
+            "Three.js",
+            "TensorFlow.js",
+            "React"
+          ]
+        }
+      ]
     },
     {
-      "title": "Shared Skills",
+      "title": "2023 Projects",
       "profileIds": [
-        1,
-        2,
-        3
+        1
       ],
-      "items": []
+      "style": "standard",
+      "items": [
+        {
+          "id": 401,
+          "title": "Todo App",
+          "image": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600",
+          "shortDesc": "Simple yet powerful todo application",
+          "description": "My first full-stack project with CRUD operations and local storage.",
+          "year": 2023,
+          "difficulty": "Beginner",
+          "status": "Archived",
+          "buildTime": "3 days",
+          "githubUrl": "#",
+          "technologies": [
+            "HTML",
+            "CSS",
+            "JavaScript"
+          ]
+        },
+        {
+          "id": 402,
+          "title": "Calculator",
+          "image": "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=600",
+          "shortDesc": "Scientific calculator with history",
+          "description": "Feature-rich calculator with scientific functions and calculation history.",
+          "year": 2023,
+          "difficulty": "Beginner",
+          "status": "Archived",
+          "buildTime": "2 days",
+          "githubUrl": "#",
+          "technologies": [
+            "JavaScript",
+            "CSS Grid"
+          ]
+        }
+      ]
     }
   ],
   "skills": [

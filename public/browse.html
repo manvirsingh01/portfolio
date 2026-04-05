@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse | Portfolio</title>
+    <title>Browse | Manvir Singh</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -12,67 +12,316 @@
                 extend: {
                     colors: {
                         'netflix-red': '#E50914',
+                        'netflix-red-hover': '#F40612',
                         'netflix-black': '#141414',
-                        'netflix-dark-gray': '#181818',
-                        'netflix-light-gray': '#2F2F2F', // Fixed color definition
+                        'netflix-dark': '#181818',
+                        'netflix-gray': '#808080',
+                        'netflix-light-gray': '#B3B3B3',
+                        'netflix-green': '#46d369',
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Bebas Neue', 'Impact', 'sans-serif'],
+                        body: ['DM Sans', 'Helvetica Neue', 'Arial', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../src/input.css"> <!-- Fallback if CDN fails, but CDN used -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Hide scrollbar for Chrome, Safari and Opera */
+        :root {
+            --netflix-red: #E50914;
+            --netflix-red-hover: #F40612;
+            --netflix-black: #141414;
+            --netflix-dark: #181818;
+            --netflix-gray: #808080;
+            --netflix-light-gray: #B3B3B3;
+            --netflix-white: #FFFFFF;
+            --netflix-green: #46d369;
+            --navbar-height: 68px;
+            --card-width: 280px;
+            --card-height: 157px;
+            --card-scale: 1.3;
+            --card-delay: 280ms;
+            --row-padding: 60px;
+            --z-cards: 10;
+            --z-hovered: 50;
+            --z-navbar: 1000;
+            --z-modal: 2000;
+            --z-toast: 5000;
+            --z-loader: 9999;
+        }
+
+        body {
+            font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Hide scrollbar */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
-
-        /* Hide scrollbar for IE, Edge and Firefox */
         .no-scrollbar {
             -ms-overflow-style: none;
-            /* IE and Edge */
             scrollbar-width: none;
-            /* Firefox */
         }
 
         .text-shadow-md {
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
+
+        /* Loading spinner */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #141414;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: var(--z-loader);
+            transition: opacity 0.4s;
+        }
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-ring {
+            width: 56px;
+            height: 56px;
+            border: 3px solid #222;
+            border-top-color: var(--netflix-red);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Hero Gradients */
+        .hero-fade-left {
+            background: linear-gradient(
+                to right,
+                rgba(20,20,20,0.88) 0%,
+                rgba(20,20,20,0.60) 35%,
+                rgba(20,20,20,0.15) 60%,
+                transparent 100%
+            );
+        }
+        .hero-fade-bottom {
+            height: 14.7vw;
+            background: linear-gradient(to top, #141414 0%, transparent 100%);
+        }
+
+        /* Card hover effects */
+        .project-card {
+            transition: transform var(--card-delay) cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                        box-shadow var(--card-delay) ease;
+            z-index: var(--z-cards);
+        }
+        .project-card.hovered {
+            transform: scale(var(--card-scale));
+            z-index: var(--z-hovered);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
+        .project-card .card-hover-panel {
+            opacity: 0;
+            transform: translateY(5px);
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .project-card.hovered .card-hover-panel {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Card action buttons */
+        .card-action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s, transform 0.15s;
+        }
+        .card-action-btn:hover {
+            border-color: #fff;
+            transform: scale(1.1);
+        }
+        .card-action-btn.primary {
+            background: #fff;
+            border-color: #fff;
+            color: #000;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-live { background: #46d369; color: #000; }
+        .badge-indev { background: #f39c12; color: #000; }
+        .badge-archived { background: #808080; color: #fff; }
+        .badge-beginner { background: #46d369; color: #000; }
+        .badge-intermediate { background: #f39c12; color: #000; }
+        .badge-advanced { background: #E50914; color: #fff; }
+        .badge-year { background: rgba(255,255,255,0.12); color: #B3B3B3; }
+
+        /* Top 10 numbers */
+        .top10-number {
+            position: absolute;
+            left: -22px;
+            bottom: -10px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 9rem;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 3px #333;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Search overlay */
+        .search-input {
+            width: 0;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: #fff;
+            transition: width 0.35s ease, padding 0.35s ease;
+        }
+        .search-input.expanded {
+            width: 260px;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.75);
+            border: 1px solid #fff;
+        }
+        #search-results {
+            position: fixed;
+            top: var(--navbar-height);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(20,20,20,0.95);
+            z-index: 999;
+            padding: 40px 60px;
+            overflow-y: auto;
+            display: none;
+        }
+        #search-results.active {
+            display: block;
+        }
+
+        /* Toast container */
+        #toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: var(--z-toast);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .toast {
+            background: #222;
+            border-left: 3px solid var(--netflix-red);
+            padding: 12px 20px;
+            font-size: 0.85rem;
+            border-radius: 3px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            animation: fadeUp 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toast.success { border-left-color: #46d369; }
+        .toast.error { border-left-color: #E50914; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Row hover effect */
+        .row-section:hover .row-title {
+            color: #fff;
+        }
+        .row-title {
+            transition: color 0.2s;
+        }
     </style>
     <script src="js/app.js" defer></script>
 </head>
 
-<body class="bg-[#141414] text-white font-sans antialiased overflow-x-hidden">
+<body class="bg-[#141414] text-white antialiased overflow-x-hidden" style="font-family: 'DM Sans', sans-serif;">
+
+    <!-- Loading Spinner -->
+    <div id="loader">
+        <div class="loader-ring"></div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <!-- Search Results Overlay -->
+    <div id="search-results">
+        <h2 class="text-2xl font-semibold mb-6">Search Results</h2>
+        <div id="search-results-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+    </div>
 
     <!-- Navbar -->
     <nav id="navbar"
-        class="fixed top-0 w-full z-50 transition-colors duration-300 bg-gradient-to-b from-black/80 to-transparent p-4 md:px-12 flex items-center justify-between">
+        class="fixed top-0 w-full z-[1000] transition-all duration-300 h-[68px] px-4 md:px-[60px] flex items-center justify-between"
+        style="background: linear-gradient(to bottom, rgba(0,0,0,0.7) 10%, transparent 100%);">
         <div class="flex items-center gap-8">
-            <a href="index.html" class="text-red-600 text-3xl md:text-4xl font-bold uppercase tracking-tighter">Manvir
-                Singh</a>
-            <ul class="hidden md:flex gap-5 text-sm font-medium text-gray-300">
-                <li><a href="#" class="text-white font-bold cursor-default">Home</a></li>
+            <a href="index.html" class="text-[#E50914] text-[2.2rem] font-bold uppercase tracking-tight" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px;">
+                MANVIR
+            </a>
+            <ul class="hidden md:flex gap-5 text-[0.82rem] font-medium text-[#B3B3B3]">
+                <li><a href="#" class="text-white cursor-default">Home</a></li>
                 <li><a href="skills.html" class="hover:text-white transition">Skills</a></li>
                 <li><a href="about.html" class="hover:text-white transition">About</a></li>
             </ul>
         </div>
         <div class="flex items-center gap-4">
-            <button class="text-white">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <!-- Search -->
+            <div class="flex items-center">
+                <input type="text" id="search-input" class="search-input" placeholder="Titles, projects...">
+                <button id="search-btn" class="text-white p-2 hover:text-[#B3B3B3] transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+            </div>
+            <!-- Bell (cosmetic) -->
+            <button class="text-white relative hidden md:block">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
+                <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-600 rounded-full"></span>
             </button>
+            <!-- Profile -->
             <div class="group relative">
-                <div class="w-8 h-8 rounded bg-gray-700 overflow-hidden cursor-pointer">
-                    <img id="nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+                <div class="flex items-center gap-1 cursor-pointer">
+                    <div class="w-8 h-8 rounded overflow-hidden">
+                        <img id="nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    <svg class="w-4 h-4 text-white transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
                 </div>
-                <div
-                    class="absolute right-0 top-full w-48 bg-black/90 border border-gray-700 hidden group-hover:block p-2 text-sm text-gray-300">
+                <div id="profile-dropdown"
+                    class="absolute right-0 top-full mt-2 w-56 bg-[rgba(0,0,0,0.9)] border border-gray-700 hidden group-hover:block py-2 text-sm">
+                    <div class="absolute -top-2 right-4 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
                     <!-- Profile Switcher Populated by JS -->
                 </div>
             </div>
@@ -80,27 +329,40 @@
     </nav>
 
     <!-- Hero Section -->
-    <header id="hero" class="relative w-full h-[56.25vw] max-h-[85vh] min-h-[500px] flex items-center">
+    <header id="hero" class="relative w-full h-[56.25vw] max-h-[85vh] min-h-[500px] flex items-end">
         <div class="absolute inset-0">
-            <img id="hero-image" src="" alt="Hero" class="w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
-            <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#141414] to-transparent"></div>
+            <img id="hero-image" src="" alt="Hero" class="w-full h-full object-cover transition-opacity duration-500">
+            <!-- Left gradient -->
+            <div class="absolute inset-0 hero-fade-left"></div>
+            <!-- Bottom gradient -->
+            <div class="absolute inset-x-0 bottom-0 hero-fade-bottom"></div>
         </div>
 
-        <div class="relative z-10 px-4 md:px-12 w-full md:w-1/2 mt-16 md:mt-0">
-            <h1 id="hero-title" class="text-4xl md:text-6xl font-bold drop-shadow-lg mb-4">Title</h1>
-            <p id="hero-desc" class="text-base md:text-lg text-shadow-md mb-6 line-clamp-3">Description...</p>
-            <div class="flex gap-4">
+        <div class="relative z-10 px-4 md:px-[60px] w-full md:w-[45%] pb-[14.7vw]">
+            <!-- Badges -->
+            <div id="hero-badges" class="flex items-center gap-2 mb-4">
+                <span id="hero-badge-status" class="badge badge-live hidden">Live</span>
+                <span id="hero-badge-difficulty" class="badge badge-advanced hidden">Advanced</span>
+                <span id="hero-badge-year" class="badge badge-year hidden">2024</span>
+            </div>
+            
+            <h1 id="hero-title" class="text-[clamp(2.5rem,5vw,4.5rem)] font-bold drop-shadow-lg mb-4 leading-tight" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;">
+                Title
+            </h1>
+            <p id="hero-desc" class="text-base md:text-lg text-[#B3B3B3] text-shadow-md mb-6 line-clamp-3 max-w-lg">
+                Description...
+            </p>
+            <div class="flex gap-3 flex-wrap">
                 <a id="hero-link" href="#" target="_blank"
-                    class="flex items-center gap-2 bg-white text-black px-6 py-2 rounded font-bold hover:bg-opacity-80 transition">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    class="flex items-center gap-2 bg-white text-black px-6 py-2.5 rounded font-semibold hover:bg-opacity-80 transition text-base">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M8 5v14l11-7z" />
                     </svg>
                     View Project
                 </a>
                 <button id="hero-more-info-btn"
-                    class="flex items-center gap-2 bg-[rgba(109,109,110,0.7)] text-white px-6 py-2 rounded font-bold hover:bg-[rgba(109,109,110,0.4)] transition">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    class="flex items-center gap-2 bg-[rgba(109,109,110,0.7)] text-white px-6 py-2.5 rounded font-semibold hover:bg-[rgba(109,109,110,0.5)] transition text-base">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -111,12 +373,12 @@
     </header>
 
     <!-- Rows -->
-    <main id="rows-container" class="pb-20 -mt-20 relative z-20 space-y-8 pl-4 md:pl-12">
+    <main id="rows-container" class="pb-20 -mt-[7vw] relative z-20 space-y-10">
         <!-- Rows injected here -->
     </main>
 
     <!-- Footer -->
-    <footer class="py-12 px-4 md:px-12 text-center text-gray-500 text-sm">
+    <footer class="py-12 px-4 md:px-[60px] text-center text-[#808080] text-sm">
         <!-- Injected by JS -->
     </footer>
 
