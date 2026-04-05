@@ -144,7 +144,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         let allProjects = [];
 
         if (rowsContainer && data.rows) {
-            const filteredRows = data.rows.filter(row => !row.profileIds || row.profileIds.includes(activeProfile.id));
+            // Filter out empty rows and "2023 Projects" row
+            const filteredRows = data.rows.filter(row => {
+                if (row.title === '2023 Projects') return false;
+                if (!row.profileIds || row.profileIds.length === 0) return row.items.length > 0;
+                return row.profileIds.includes(activeProfile.id);
+            });
 
             filteredRows.forEach((row, rowIndex) => {
                 possibleHeroItems = [...possibleHeroItems, ...row.items];
@@ -232,6 +237,48 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `;
                 rowsContainer.appendChild(rowSection);
             });
+
+            // Add "Explore More" row with About and Skills navigation
+            const exploreRow = document.createElement('section');
+            exploreRow.className = 'row-section mb-6 group px-4 md:px-[60px]';
+            exploreRow.innerHTML = `
+                <div class="flex items-baseline gap-4 mb-3">
+                    <h2 class="row-title text-[1.05rem] font-semibold text-[#808080]">Explore More</h2>
+                </div>
+                <div class="row-track flex gap-4 overflow-x-auto pb-4 no-scrollbar scroll-smooth">
+                    <!-- About Card -->
+                    <a href="about.html" class="nav-card group/card relative flex-shrink-0 min-w-[280px] md:min-w-[350px] cursor-pointer rounded-lg overflow-hidden transition-transform hover:scale-105">
+                        <div class="relative h-[140px] md:h-[180px] bg-gradient-to-br from-[#E50914] to-[#8B0000]">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-16 h-16 md:w-20 md:h-20 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 group-hover/card:bg-black/10 transition"></div>
+                        </div>
+                        <div class="bg-[#181818] p-4">
+                            <h3 class="text-lg font-bold text-white mb-1">About Me</h3>
+                            <p class="text-sm text-[#B3B3B3]">Learn about my journey, experience & background</p>
+                        </div>
+                    </a>
+                    <!-- Skills Card -->
+                    <a href="skills.html" class="nav-card group/card relative flex-shrink-0 min-w-[280px] md:min-w-[350px] cursor-pointer rounded-lg overflow-hidden transition-transform hover:scale-105">
+                        <div class="relative h-[140px] md:h-[180px] bg-gradient-to-br from-[#46d369] to-[#1a5928]">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <svg class="w-16 h-16 md:w-20 md:h-20 text-white/90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 group-hover/card:bg-black/10 transition"></div>
+                        </div>
+                        <div class="bg-[#181818] p-4">
+                            <h3 class="text-lg font-bold text-white mb-1">My Skills</h3>
+                            <p class="text-sm text-[#B3B3B3]">Explore my technical skills & expertise</p>
+                        </div>
+                    </a>
+                </div>
+            `;
+            rowsContainer.appendChild(exploreRow);
 
             // Initialize card hover with delay
             initCardHover();
