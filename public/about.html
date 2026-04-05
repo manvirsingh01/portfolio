@@ -163,7 +163,13 @@
             </ul>
         </div>
         <div class="flex items-center gap-4">
-            <div class="group relative">
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white p-2 hover:text-[#B3B3B3] transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <div class="group relative hidden md:block">
                 <div class="flex items-center gap-1 cursor-pointer">
                     <div class="w-8 h-8 rounded overflow-hidden">
                         <img id="nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
@@ -179,6 +185,26 @@
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-[999] hidden flex-col items-center justify-center">
+        <button id="mobile-menu-close" class="absolute top-4 right-4 text-white p-2">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <ul class="flex flex-col gap-8 text-center">
+            <li><a href="browse.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">Home</a></li>
+            <li><a href="skills.html" class="text-2xl font-semibold text-[#B3B3B3] hover:text-white transition">Skills</a></li>
+            <li><a href="about.html" class="text-2xl font-semibold text-white hover:text-[#E50914] transition">About</a></li>
+        </ul>
+        <div class="mt-12 flex items-center gap-3">
+            <div class="w-10 h-10 rounded overflow-hidden">
+                <img id="mobile-nav-avatar" src="" alt="Profile" class="w-full h-full object-cover">
+            </div>
+            <a href="index.html" onclick="localStorage.removeItem('activeProfile')" class="text-[#B3B3B3] hover:text-white transition">Sign out</a>
+        </div>
+    </div>
 
     <!-- Hero Section with Profile Picture -->
     <header class="relative pt-[68px]">
@@ -222,7 +248,7 @@
         <!-- Intro -->
         <section class="max-w-3xl mx-auto mb-20">
             <h2 class="text-2xl font-bold mb-6 text-center" style="font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px;">ABOUT ME</h2>
-            <p id="about-intro" class="text-lg text-[#B3B3B3] leading-relaxed text-center"></p>
+            <div id="about-intro" class="text-lg text-[#B3B3B3] leading-relaxed whitespace-pre-line"></div>
         </section>
 
         <!-- Timeline (Episode Style) -->
@@ -236,6 +262,14 @@
         </section>
 
     </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 md:px-[60px] text-center text-[#808080] text-sm border-t border-gray-800">
+        <div id="footer-socials" class="flex gap-6 mb-4 justify-center">
+            <!-- Socials Injected by JS -->
+        </div>
+        <p>&copy; 2026 Manvir Singh. All Rights Reserved.</p>
+    </footer>
 
 </body>
 

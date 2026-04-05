@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "its manvir singh",
-      "avatar": "https://ibb.co/QjJDsP2B"
+      "avatar": "https://i.ibb.co/zhkChw1F/53598.png"
     }
   ],
   "hero": {
@@ -24,7 +24,7 @@
         {
           "id": 1775388255019,
           "title": "Kishan Shaathe",
-          "image": "https://ibb.co/XxYBZC44",
+          "image": "https://i.ibb.co/nMP2sL00/Screenshot-2026-01-11-at-7-04-41-PM.png",
           "shortDesc": "Developed \"Kishan Saathi,\" a web-based platform designed to support farmers with accessible digital solutions. The application provides useful information and tools to assist in decision-making related to agriculture and resource management.  Built using modern full-stack technologies, the platform ensures a responsive and user-friendly interface. Integrated features such as real-time data handling, structured dashboards, and scalable architecture to enhance usability and performance.  Focused on solving real-world agricultural challenges by creating a reliable and efficient system that bridges the gap between technology and farming practices.",
           "githubUrl": "https://github.com/manvirsingh01/kishan-saathi",
           "liveUrl": "https://kishan-saathi.vercel.app",
@@ -32,18 +32,19 @@
           "difficulty": "Intermediate",
           "status": "Live",
           "buildTime": "1 month",
-          "description": "",
+          "description": "Developed \"Kishan Saathi,\" a web-based platform designed to support farmers with accessible digital solutions. The application provides useful information and tools to assist in decision-making related to agriculture and resource management.  Built using modern full-stack technologies, the platform ensures a responsive and user-friendly interface. Integrated features such as real-time data handling, structured dashboards, and scalable architecture to enhance usability and performance.  Focused on solving real-world agricultural challenges by creating a reliable and efficient system that bridges the gap between technology and farming practices.",
           "technologies": [],
           "useCases": [],
           "futureScope": "",
           "contributors": [],
-          "recommendations": []
+          "recommendations": [],
+          "bannerImage": "https://i.ibb.co/nMP2sL00/Screenshot-2026-01-11-at-7-04-41-PM.png"
         },
         {
           "id": 1775388423850,
           "title": "snow bytes",
-          "image": "https://ibb.co/r26tknNP",
-          "bannerImage": "https://ibb.co/r26tknNP",
+          "image": "https://i.ibb.co/fGzXFQwn/Screenshot-2026-04-05-at-4-55-08-PM.png",
+          "bannerImage": "https://i.ibb.co/fGzXFQwn/Screenshot-2026-04-05-at-4-55-08-PM.png",
           "shortDesc": "Developed \"Snow Bytes,\" a modern web-based platform focused on delivering efficient and scalable digital solutions. The project showcases strong full-stack development skills with an emphasis on performance, clean UI design, and responsive user experience.  Implemented dynamic features, structured data handling, and optimized workflows to ensure smooth functionality. Designed with scalability and maintainability in mind, making it adaptable for real-world applications.  This project highlights practical problem-solving abilities and the use of modern technologies to build reliable and user-centric systems.",
           "githubUrl": "https://github.com/manvirsingh01/alpha",
           "liveUrl": "https://alpha-azure.vercel.app/#encoders/base64",
@@ -60,8 +61,8 @@
         {
           "id": 1775388578318,
           "title": "netcat",
-          "image": "https://ibb.co/231DGkzj",
-          "bannerImage": "https://ibb.co/231DGkzj",
+          "image": "https://i.ibb.co/yFcwHQz8/Screenshot-2026-04-05-at-4-59-03-PM.png",
+          "bannerImage": "https://i.ibb.co/yFcwHQz8/Screenshot-2026-04-05-at-4-59-03-PM.png",
           "shortDesc": "Developed a network utility tool using Netcat concepts to enable communication between systems over TCP/UDP protocols. The project demonstrates skills in network programming, port scanning, data transfer, and basic client-server architecture.  Implemented features such as connection handling, message exchange, and testing of network services, providing hands-on experience in cybersecurity and networking fundamentals.",
           "githubUrl": "https://github.com/manvirsingh01/natcat",
           "liveUrl": "https://natcat-nine.vercel.app",
@@ -79,8 +80,8 @@
         {
           "id": 1775388735063,
           "title": "stego-vault",
-          "image": "https://ibb.co/Q3WvcXWs",
-          "bannerImage": "https://ibb.co/Q3WvcXWs",
+          "image": "https://i.ibb.co/nNXM0RXh/Screenshot-2026-04-05-at-5-00-59-PM.png",
+          "bannerImage": "https://i.ibb.co/nNXM0RXh/Screenshot-2026-04-05-at-5-00-59-PM.png",
           "shortDesc": "Developed \"Stego Vault,\" a secure application that uses steganography techniques to hide sensitive data within digital images. The project enables users to embed and extract confidential information while maintaining the visual integrity of the image.  Implemented encryption mechanisms to ensure that only authorized users can access the hidden data, combining data security with covert communication. The system supports encoding and decoding workflows, making it a practical tool for secure data storage and transmission.  Focused on cybersecurity principles such as data privacy, confidentiality, and secure communication by leveraging image-based steganography methods, where information is concealed inside media files without raising suspicion.",
           "githubUrl": "https://github.com/manvirsingh01/stego-vault",
           "liveUrl": "https://stego-vault-delta.vercel.app",
@@ -94,15 +95,15 @@
         {
           "id": 1775388945844,
           "title": "ASL_ToolBox_qc_v01",
-          "image": "https://radiopaedia.org/articles/arterial-spin-labelling-mr-perfusion-2",
-          "bannerImage": "https://radiopaedia.org/articles/arterial-spin-labelling-mr-perfusion-2",
+          "image": "https://i.ibb.co/SXdNm3D7/Screenshot-2026-04-05-at-9-40-25-PM.png",
+          "bannerImage": "https://i.ibb.co/SXdNm3D7/Screenshot-2026-04-05-at-9-40-25-PM.png",
           "shortDesc": "Developed \"ASL QC Toolbox,\" a specialized software tool designed for quality control and analysis in advanced system workflows. The project focuses on improving accuracy, efficiency, and reliability through automated validation and data processing techniques.  Implemented modular components to handle data inspection, error detection, and performance evaluation, enabling streamlined quality assurance processes. Designed with scalability and usability in mind, the system provides structured outputs and intuitive interfaces for efficient monitoring and analysis.  This project demonstrates strong skills in software development, problem-solving, and system optimization, with an emphasis on building practical tools for real-world technical applications.",
           "githubUrl": "https://github.com/manvirsingh01/asl-qc-toolbox",
           "liveUrl": "",
           "year": 2026,
           "difficulty": "Advanced",
           "status": "In Dev",
-          "description": "",
+          "description": "Developed \"ASL QC Toolbox,\" a specialized software tool designed for quality control and analysis in advanced system workflows. The project focuses on improving accuracy, efficiency, and reliability through automated validation and data processing techniques.  Implemented modular components to handle data inspection, error detection, and performance evaluation, enabling streamlined quality assurance processes. Designed with scalability and usability in mind, the system provides structured outputs and intuitive interfaces for efficient monitoring and analysis.  This project demonstrates strong skills in software development, problem-solving, and system optimization, with an emphasis on building practical tools for real-world technical applications.",
           "technologies": [],
           "useCases": [],
           "futureScope": "",
@@ -221,11 +222,15 @@
       },
       {
         "platform": "LinkedIn",
-        "url": "#"
+        "url": "https://www.linkedin.com/in/manvirsingh01/"
       },
       {
         "platform": "Twitter",
-        "url": "#"
+        "url": "https://x.com/itsmanvir01"
+      },
+      {
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/itsmanvir01/"
       }
     ],
     "timeline": [
@@ -260,7 +265,7 @@
         "desc": "Completed a 1-month training at NFSU Gandhinagar in malware analysis, cybersecurity, and IT-OT systems."
       }
     ],
-    "profilePicture": "https://photos.app.goo.gl/Sfet3SYsYHckQBjS6"
+    "profilePicture": "https://i.ibb.co/QvhPw9W6/Screenshot-2026-04-05-at-9-38-55-PM.png"
   },
   "experience": [
     {

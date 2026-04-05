@@ -99,6 +99,8 @@
                 class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Skills</button>
             <button onclick="switchTab('about')" id="tab-about"
                 class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">About</button>
+            <button onclick="switchTab('socials')" id="tab-socials"
+                class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Social Links</button>
             <button onclick="switchTab('experience')" id="tab-experience"
                 class="tab-btn px-4 py-2 bg-[#333] text-[#B3B3B3] rounded hover:bg-[#444] transition whitespace-nowrap">Experience</button>
             <button onclick="switchTab('rows')" id="tab-rows"
@@ -536,6 +538,80 @@
             <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
                 <h2 class="text-xl font-bold mb-6">Timeline Events</h2>
                 <div id="timeline-list" class="space-y-3 max-h-[500px] overflow-y-auto custom-scroll pr-2"></div>
+            </section>
+        </div>
+
+        <!-- SOCIAL LINKS TAB -->
+        <div id="view-socials" class="tab-content hidden grid md:grid-cols-2 gap-8">
+            <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Add Social Link</h2>
+                <form id="add-social-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm text-[#B3B3B3] mb-1">Platform</label>
+                        <select id="social-platform"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                            required>
+                            <option value="">Select platform...</option>
+                            <option value="GitHub">GitHub</option>
+                            <option value="LinkedIn">LinkedIn</option>
+                            <option value="Twitter">Twitter</option>
+                            <option value="Instagram">Instagram</option>
+                            <option value="YouTube">YouTube</option>
+                            <option value="Facebook">Facebook</option>
+                            <option value="Discord">Discord</option>
+                            <option value="Email">Email</option>
+                            <option value="Website">Website</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div id="custom-platform-container" class="hidden">
+                        <label class="block text-sm text-[#B3B3B3] mb-1">Custom Platform Name</label>
+                        <input type="text" id="social-custom-platform"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                            placeholder="e.g. TikTok, Twitch...">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-[#B3B3B3] mb-1">URL</label>
+                        <input type="url" id="social-url"
+                            class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                            placeholder="https://..." required>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-[#E50914] hover:bg-[#F40612] text-white font-bold py-3 rounded transition mt-4">Add Social Link</button>
+                </form>
+
+                <!-- Edit Social Link -->
+                <div class="mt-8 pt-6 border-t border-gray-700">
+                    <h3 class="text-lg font-bold mb-4">Edit Social Link</h3>
+                    <div id="edit-social-prompt" class="text-center py-4 text-[#808080]">
+                        <p>Click "Edit" on a social link to edit it</p>
+                    </div>
+                    <form id="edit-social-form" class="space-y-4 hidden">
+                        <input type="hidden" id="edit-social-index">
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">Platform</label>
+                            <input type="text" id="edit-social-platform"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                required>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-[#B3B3B3] mb-1">URL</label>
+                            <input type="url" id="edit-social-url"
+                                class="w-full bg-[#333] border-none rounded p-3 text-white focus:ring-2 focus:ring-[#E50914]"
+                                required>
+                        </div>
+                        <div class="flex gap-2">
+                            <button type="submit"
+                                class="flex-1 bg-[#E50914] hover:bg-[#F40612] text-white font-bold py-3 rounded transition">Save</button>
+                            <button type="button" onclick="cancelEditSocial()"
+                                class="flex-1 bg-[#333] hover:bg-[#444] text-white font-bold py-3 rounded transition">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <section class="bg-[#181818] p-6 rounded-lg border border-gray-800">
+                <h2 class="text-xl font-bold mb-6">Your Social Links</h2>
+                <div id="socials-list" class="space-y-3 max-h-[500px] overflow-y-auto custom-scroll pr-2"></div>
             </section>
         </div>
 
